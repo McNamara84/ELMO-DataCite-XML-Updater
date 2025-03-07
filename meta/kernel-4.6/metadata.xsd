@@ -92,9 +92,9 @@ addition of new relationTypes "HasTranslation" and "IsTranslationOf"; addition o
                                         </xs:element>
                                         <xs:element name="givenName" minOccurs="0" />
                                         <xs:element name="familyName" minOccurs="0" />
-                                        <xs:element name="nameIdentifier" xsi:type="nameIdentifier"
+                                        <xs:element name="nameIdentifier" type="nameIdentifier"
                                             minOccurs="0" maxOccurs="unbounded" />
-                                        <xs:element name="affiliation" xsi:type="affiliation"
+                                        <xs:element name="affiliation" type="affiliation"
                                             minOccurs="0" maxOccurs="unbounded" />
                                     </xs:sequence>
                                 </xs:complexType>
@@ -228,9 +228,9 @@ addition of new relationTypes "HasTranslation" and "IsTranslationOf"; addition o
                                         </xs:element>
                                         <xs:element name="givenName" minOccurs="0" />
                                         <xs:element name="familyName" minOccurs="0" />
-                                        <xs:element name="nameIdentifier" xsi:type="nameIdentifier"
+                                        <xs:element name="nameIdentifier" type="nameIdentifier"
                                             minOccurs="0" maxOccurs="unbounded" />
-                                        <xs:element name="affiliation" xsi:type="affiliation"
+                                        <xs:element name="affiliation" type="affiliation"
                                             minOccurs="0" maxOccurs="unbounded" />
                                     </xs:sequence>
                                     <xs:attribute name="contributorType" type="contributorType"
