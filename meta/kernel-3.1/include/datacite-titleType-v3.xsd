@@ -1,0 +1,10 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://datacite.org/schema/kernel-3"
+    targetNamespace="http://datacite.org/schema/kernel-3" elementFormDefault="qualified">
+    <xs:simpleType name="titleType" id="titleType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="AlternativeTitle" />
+            <xs:enumeration value="Subtitle" />
+            <xs:enumeration value="TranslatedTitle" />
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>
