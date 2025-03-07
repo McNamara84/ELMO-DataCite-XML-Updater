@@ -6,46 +6,6 @@
 		<properties SelectedLanguage="xslt"/>
 		<structure>
 			<children>
-				<component name="metadata" library="xml" uid="2" kind="14">
-					<properties XSLTTargetEncoding="UTF-8"/>
-					<view rbx="333" rby="823"/>
-					<data>
-						<root>
-							<header>
-								<namespaces>
-									<namespace uid="http://datacite.org/schema/kernel-3"/>
-									<namespace uid="http://www.altova.com/mapforce"/>
-								</namespaces>
-							</header>
-							<entry name="FileInstance" ns="1" expanded="1">
-								<entry name="document" ns="1" expanded="1" casttotargettypemode="cast-in-subtree">
-									<entry name="resource" outkey="1" expanded="1">
-										<entry name="identifier" expanded="1"/>
-										<entry name="creators">
-											<entry name="creator" expanded="1"/>
-										</entry>
-										<entry name="subjects">
-											<entry name="subject" expanded="1"/>
-										</entry>
-										<entry name="contributors">
-											<entry name="contributor" expanded="1"/>
-										</entry>
-										<entry name="dates">
-											<entry name="date" expanded="1"/>
-										</entry>
-										<entry name="relatedIdentifiers">
-											<entry name="relatedIdentifier" expanded="1"/>
-										</entry>
-										<entry name="rightsList">
-											<entry name="rights" expanded="1"/>
-										</entry>
-									</entry>
-								</entry>
-							</entry>
-						</root>
-						<document schema="meta\kernel-3.1\metadata.xsd" instanceroot="{http://datacite.org/schema/kernel-3}resource" inputinstance="meta\kernel-3.1\example\datacite-example-full-v3.1.xml" outputinstance="meta\kernel-3.1\example\datacite-example-full-v3.1.xml"/>
-					</data>
-				</component>
 				<component name="metadata" library="xml" uid="3" kind="14">
 					<properties XSLTTargetEncoding="UTF-8" XSLTDefaultOutput="1"/>
 					<view ltx="1464" lty="42" rbx="1793" rby="745"/>
@@ -60,10 +20,11 @@
 							<entry name="FileInstance" ns="1" expanded="1">
 								<entry name="document" ns="1" expanded="1" casttotargettypemode="cast-in-subtree">
 									<entry name="resource" inpkey="2" expanded="1">
-										<entry name="identifier" expanded="1"/>
+										<entry name="identifier" inpkey="3" expanded="1"/>
 										<entry name="creators">
 											<entry name="creator" expanded="1"/>
 										</entry>
+										<entry name="publicationYear" inpkey="4"/>
 										<entry name="subjects">
 											<entry name="subject" expanded="1"/>
 										</entry>
@@ -86,13 +47,70 @@
 						<document schema="meta\kernel-4.6\metadata.xsd" instanceroot="{http://datacite.org/schema/kernel-4}resource" inputinstance="meta\kernel-4.6\example\datacite-example-full-v4.xml" outputinstance="meta\kernel-4.6\example\datacite-example-full-v4.xml"/>
 					</data>
 				</component>
+				<component name="metadata" library="xml" uid="2" kind="14">
+					<properties XSLTTargetEncoding="UTF-8"/>
+					<view rbx="333" rby="823"/>
+					<data>
+						<root>
+							<header>
+								<namespaces>
+									<namespace uid="http://datacite.org/schema/kernel-3"/>
+									<namespace uid="http://www.altova.com/mapforce"/>
+								</namespaces>
+							</header>
+							<entry name="FileInstance" ns="1" expanded="1">
+								<entry name="document" ns="1" expanded="1" casttotargettypemode="cast-in-subtree">
+									<entry name="resource" outkey="1" expanded="1">
+										<entry name="identifier" outkey="5" expanded="1"/>
+										<entry name="creators">
+											<entry name="creator" expanded="1"/>
+										</entry>
+										<entry name="publicationYear" outkey="6"/>
+										<entry name="subjects">
+											<entry name="subject" expanded="1"/>
+										</entry>
+										<entry name="contributors">
+											<entry name="contributor" expanded="1"/>
+										</entry>
+										<entry name="dates">
+											<entry name="date" expanded="1"/>
+										</entry>
+										<entry name="relatedIdentifiers">
+											<entry name="relatedIdentifier" expanded="1"/>
+										</entry>
+										<entry name="rightsList">
+											<entry name="rights" expanded="1"/>
+										</entry>
+									</entry>
+								</entry>
+							</entry>
+						</root>
+						<document schema="meta\kernel-3.1\metadata.xsd" instanceroot="{http://datacite.org/schema/kernel-3}resource" inputinstance="meta\kernel-3.1\example\datacite-example-full-v3.1.xml" outputinstance="meta\kernel-3.1\example\datacite-example-full-v3.1.xml"/>
+					</data>
+				</component>
 			</children>
 			<graph directed="1">
-				<edges/>
+				<edges>
+					<edge edgekey="3">
+						<data>
+							<dataconnection type="2"/>
+						</data>
+					</edge>
+				</edges>
 				<vertices>
 					<vertex vertexkey="1">
 						<edges>
 							<edge vertexkey="2"/>
+						</edges>
+					</vertex>
+					<vertex vertexkey="5">
+						<edges>
+							<edge vertexkey="3" edgekey="3"/>
+						</edges>
+					</vertex>
+					<vertex vertexkey="6">
+						<edges>
+							<edge vertexkey="4"/>
 						</edges>
 					</vertex>
 				</vertices>
