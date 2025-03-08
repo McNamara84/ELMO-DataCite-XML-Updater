@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DataCite XML Updater</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>DataCite XML Updater</h1>
+        <form id="uploadForm">
+            <div class="input-group">
+                <label for="xmlFiles">XML-Dateien auswählen:</label>
+                <input type="file" id="xmlFiles" name="xmlFiles" multiple accept=".xml">
+            </div>
+
+            <div class="input-group">
+                <label for="version">Ziel-Version:</label>
+                <select id="version" name="version">
+                    <option value="4.6">Version 4.6</option>
+                </select>
+            </div>
+
+            <button type="submit">Transformation starten</button>
+        </form>
+
+        <div id="status"></div>
+    </div>
+    <script src="client.js"></script>
+</body>
+
+</html>
