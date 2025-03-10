@@ -4,19 +4,25 @@ document.getElementById('uploadForm').addEventListener('submit', async (e) => {
     const formData = new FormData();
     const files = document.getElementById('xmlFiles').files;
     const version = document.getElementById('version').value;
-    const status = document.getElementById('status');
 
-    if (files.length === 0) {
-        status.textContent = 'Bitte wählen Sie mindestens eine XML-Datei aus.';
-        return;
-    }
-
+    // Dateien zum FormData hinzufügen
     for (let file of files) {
         formData.append('xmlFiles', file);
     }
     formData.append('version', version);
 
-    status.textContent = 'Transformation läuft...';
+    // Status-Container leeren und Lade-Anzeige hinzufügen
+    const statusDiv = document.getElementById('status');
+    statusDiv.innerHTML = `
+        <div class="alert alert-info">
+            <div class="d-flex align-items-center">
+                <div class="spinner-border spinner-border-sm me-2" role="status">
+                    <span class="visually-hidden">Wird verarbeitet...</span>
+                </div>
+                Transformation wird durchgeführt...
+            </div>
+        </div>
+    `;
 
     try {
         const response = await fetch('/transform', {
@@ -27,31 +33,36 @@ document.getElementById('uploadForm').addEventListener('submit', async (e) => {
         const result = await response.json();
 
         if (result.error) {
-            status.textContent = `Fehler: ${result.error}`;
-            return;
+            throw new Error(result.error);
         }
 
         // Ergebnisse anzeigen
-        let resultHtml = '<h3>Transformationsergebnisse:</h3><ul>';
+        let resultsHtml = '<div class="mt-4">';
         result.results.forEach(file => {
             if (file.status === 'success') {
-                resultHtml += `
-                    <li>
-                        ${file.originalName}: Erfolgreich transformiert
-                        <a href="/download/${file.transformedPath.split('/').pop()}" 
-                           class="download-link">Download</a>
-                    </li>`;
+                resultsHtml += `
+                    <div class="alert alert-success d-flex justify-content-between align-items-center">
+                        <span>${file.originalName}: Erfolgreich transformiert</span>
+                        <a href="/download/${file.transformedPath}" 
+                           class="btn btn-outline-success btn-sm">
+                            Download
+                        </a>
+                    </div>`;
             } else {
-                resultHtml += `
-                    <li>
+                resultsHtml += `
+                    <div class="alert alert-danger">
                         ${file.originalName}: Fehler - ${file.error}
-                    </li>`;
+                    </div>`;
             }
         });
-        resultHtml += '</ul>';
+        resultsHtml += '</div>';
 
-        status.innerHTML = resultHtml;
+        statusDiv.innerHTML = resultsHtml;
+
     } catch (error) {
-        status.textContent = 'Fehler bei der Transformation: ' + error.message;
+        statusDiv.innerHTML = `
+            <div class="alert alert-danger">
+                Fehler bei der Verarbeitung: ${error.message}
+            </div>`;
     }
 });
