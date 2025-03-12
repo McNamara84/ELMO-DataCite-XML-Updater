@@ -14,7 +14,7 @@
 					<targets>
 						<datapoint pos="0" key="157"/>
 					</targets>
-					<view ltx="819" lty="2038" rbx="910" rby="2090"/>
+					<view ltx="819" lty="2038" rbx="913" rby="2091"/>
 					<data>
 						<comment>
 							<text>geoLocationBox: use substring after the first Space
@@ -31,7 +31,7 @@ northBoundLatitude_eastBoundLongitude</text>
 					<targets>
 						<datapoint pos="0" key="158"/>
 					</targets>
-					<view ltx="1072" lty="2177" rbx="1163" rby="2229"/>
+					<view ltx="1072" lty="2177" rbx="1166" rby="2230"/>
 					<data>
 						<comment>
 							<text>geoLocationBox:
@@ -48,7 +48,7 @@ northBoundLatitude_eastBoundLongitude</text>
 					<targets>
 						<datapoint pos="0" key="154"/>
 					</targets>
-					<view ltx="1072" lty="2051" rbx="1172" rby="2103"/>
+					<view ltx="1072" lty="2051" rbx="1175" rby="2104"/>
 					<data>
 						<comment>
 							<text>geoLocationBox: 
@@ -64,7 +64,7 @@ use substring before the first Space (=^=northBoundLatitude)</text>
 					<targets>
 						<datapoint pos="0" key="150"/>
 					</targets>
-					<view ltx="589" lty="1839" rbx="680" rby="1891"/>
+					<view ltx="589" lty="1839" rbx="683" rby="1892"/>
 					<data>
 						<comment>
 							<text>geoLocationBox: use substring after the first Space
@@ -81,7 +81,7 @@ westBoundLongitude_northBoundLatitude_eastBoundLongitude</text>
 					<targets>
 						<datapoint pos="0" key="131"/>
 					</targets>
-					<view ltx="589" lty="1739" rbx="689" rby="1791"/>
+					<view ltx="589" lty="1739" rbx="692" rby="1792"/>
 					<data>
 						<comment>
 							<text>use substring before the first &quot;space&quot; (=^=southBoundLongitude)
@@ -98,7 +98,7 @@ southBoundLatitude_westBoundLongitude_northBoundLatitude_eastBoundLongitude</tex
 					<targets>
 						<datapoint pos="0" key="149"/>
 					</targets>
-					<view ltx="819" lty="1944" rbx="919" rby="1996"/>
+					<view ltx="819" lty="1944" rbx="922" rby="1997"/>
 					<data>
 						<comment>
 							<text>geoLocationBox: 
@@ -114,7 +114,7 @@ use substring before the first Space (=^=westBoundLongitude)</text>
 					<targets>
 						<datapoint pos="0" key="127"/>
 					</targets>
-					<view ltx="1106" lty="1838" rbx="1206" rby="1890"/>
+					<view ltx="1106" lty="1838" rbx="1209" rby="1891"/>
 					<data>
 						<comment>
 							<text>use substring geoLocationPoint before &quot;space&quot;</text>
@@ -129,7 +129,7 @@ use substring before the first Space (=^=westBoundLongitude)</text>
 					<targets>
 						<datapoint pos="0" key="135"/>
 					</targets>
-					<view ltx="1107" lty="1765" rbx="1198" rby="1817"/>
+					<view ltx="1107" lty="1765" rbx="1201" rby="1818"/>
 					<data>
 						<comment>
 							<text>use substring of geoLocationPoint after &quot;space&quot;</text>
@@ -140,7 +140,7 @@ use substring before the first Space (=^=westBoundLongitude)</text>
 					<targets>
 						<datapoint pos="0" key="128"/>
 					</targets>
-					<view ltx="394" lty="1979" rbx="434" rby="1996"/>
+					<view ltx="394" lty="1979" rbx="437" rby="1995"/>
 					<data>
 						<constant value=" " datatype="string"/>
 						<comment>
@@ -153,7 +153,7 @@ used for dividing geoLocationPoint and geoLocationBox coordinates</text>
 					<targets>
 						<datapoint pos="0" key="165"/>
 					</targets>
-					<view ltx="370" lty="732" rbx="439" rby="749"/>
+					<view ltx="370" lty="732" rbx="443" rby="748"/>
 					<data>
 						<constant value="Funder" datatype="string"/>
 					</data>
@@ -167,129 +167,7 @@ used for dividing geoLocationPoint and geoLocationBox coordinates</text>
 						<datapoint pos="0" key="168"/>
 						<datapoint pos="1" key="169"/>
 					</targets>
-					<view ltx="654" lty="676" rbx="756" rby="728"/>
-				</component>
-				<component name="metadata" library="xml" uid="3" kind="14">
-					<properties XSLTTargetEncoding="UTF-8" XSLTDefaultOutput="1"/>
-					<view ltx="1327" lty="-1" rbx="1672" rby="2115"/>
-					<data>
-						<root scrollposition="670">
-							<header>
-								<namespaces>
-									<namespace uid="http://datacite.org/schema/kernel-4"/>
-									<namespace/>
-									<namespace uid="http://www.w3.org/XML/1998/namespace"/>
-									<namespace uid="http://www.altova.com/mapforce"/>
-								</namespaces>
-							</header>
-							<entry name="FileInstance" ns="3" expanded="1">
-								<entry name="document" ns="3" expanded="1" casttotargettypemode="cast-in-subtree">
-									<entry name="resource" inpkey="2" expanded="1">
-										<entry name="identifier" inpkey="3" expanded="1"/>
-										<entry name="creators" inpkey="7" expanded="1">
-											<entry name="creator" inpkey="8" expanded="1">
-												<entry name="creatorName" inpkey="9" expanded="1"/>
-												<entry name="givenName" expanded="1"/>
-												<entry name="familyName" expanded="1"/>
-												<entry name="nameIdentifier" inpkey="10" expanded="1"/>
-												<entry name="affiliation" inpkey="11" expanded="1"/>
-											</entry>
-										</entry>
-										<entry name="titles" inpkey="12" expanded="1">
-											<entry name="title" inpkey="13" expanded="1"/>
-										</entry>
-										<entry name="publisher" inpkey="14" expanded="1"/>
-										<entry name="publicationYear" inpkey="4"/>
-										<entry name="resourceType" inpkey="15" expanded="1"/>
-										<entry name="subjects" inpkey="16" expanded="1">
-											<entry name="subject" inpkey="17" expanded="1">
-												<entry name="subjectScheme" ns="1" type="attribute" inpkey="18"/>
-												<entry name="schemeURI" ns="1" type="attribute" inpkey="19"/>
-												<entry name="lang" ns="2" type="attribute" inpkey="20"/>
-											</entry>
-										</entry>
-										<entry name="contributors" inpkey="21" expanded="1">
-											<entry name="contributor" inpkey="22" expanded="1">
-												<entry name="contributorType" ns="1" type="attribute" inpkey="23"/>
-												<entry name="contributorName" inpkey="24" expanded="1"/>
-												<entry name="givenName" expanded="1"/>
-												<entry name="familyName" expanded="1"/>
-												<entry name="nameIdentifier" inpkey="25" expanded="1"/>
-												<entry name="affiliation" inpkey="26" expanded="1"/>
-											</entry>
-										</entry>
-										<entry name="dates" inpkey="27" expanded="1">
-											<entry name="date" inpkey="28" expanded="1">
-												<entry name="dateType" ns="1" type="attribute" inpkey="29"/>
-											</entry>
-										</entry>
-										<entry name="language" inpkey="30"/>
-										<entry name="alternateIdentifiers" inpkey="31" expanded="1">
-											<entry name="alternateIdentifier" inpkey="32" expanded="1"/>
-										</entry>
-										<entry name="relatedIdentifiers" inpkey="33" expanded="1">
-											<entry name="relatedIdentifier" inpkey="34" expanded="1">
-												<entry name="relatedIdentifierType" ns="1" type="attribute" inpkey="35"/>
-												<entry name="relationType" ns="1" type="attribute" inpkey="36"/>
-												<entry name="relatedMetadataScheme" ns="1" type="attribute" inpkey="37"/>
-												<entry name="schemeURI" ns="1" type="attribute" inpkey="38"/>
-												<entry name="schemeType" ns="1" type="attribute" inpkey="39"/>
-											</entry>
-										</entry>
-										<entry name="sizes" inpkey="40" expanded="1">
-											<entry name="size" inpkey="41"/>
-										</entry>
-										<entry name="formats" inpkey="42" expanded="1">
-											<entry name="format" inpkey="43"/>
-										</entry>
-										<entry name="version" inpkey="44"/>
-										<entry name="rightsList" inpkey="45" expanded="1">
-											<entry name="rights" inpkey="46" expanded="1">
-												<entry name="rightsURI" ns="1" type="attribute" inpkey="47"/>
-											</entry>
-										</entry>
-										<entry name="descriptions" inpkey="48" expanded="1">
-											<entry name="description" inpkey="49" expanded="1">
-												<entry name="descriptionType" ns="1" type="attribute" inpkey="50"/>
-												<entry name="lang" ns="2" type="attribute" inpkey="51"/>
-												<entry name="#text" ns="1" inpkey="52"/>
-												<entry name="br" inpkey="53"/>
-											</entry>
-										</entry>
-										<entry name="geoLocations" inpkey="54" expanded="1">
-											<entry name="geoLocation" inpkey="55" expanded="1">
-												<entry name="geoLocationPlace" inpkey="56">
-													<entry name="#text" ns="1" inpkey="57"/>
-												</entry>
-												<entry name="geoLocationPoint" inpkey="58" expanded="1">
-													<entry name="pointLongitude" inpkey="136"/>
-													<entry name="pointLatitude" inpkey="119"/>
-												</entry>
-												<entry name="geoLocationBox" inpkey="59" expanded="1">
-													<entry name="westBoundLongitude" inpkey="163"/>
-													<entry name="eastBoundLongitude" inpkey="151"/>
-													<entry name="southBoundLatitude" inpkey="132"/>
-													<entry name="northBoundLatitude" inpkey="164"/>
-												</entry>
-												<entry name="geoLocationPolygon" expanded="1">
-													<entry name="polygonPoint" expanded="1"/>
-												</entry>
-											</entry>
-										</entry>
-										<entry name="fundingReferences" inpkey="183" expanded="1">
-											<entry name="fundingReference" inpkey="173" expanded="1">
-												<entry name="funderName" inpkey="174"/>
-												<entry name="funderIdentifier" expanded="1"/>
-												<entry name="awardNumber" expanded="1"/>
-												<entry name="awardTitle" expanded="1"/>
-											</entry>
-										</entry>
-									</entry>
-								</entry>
-							</entry>
-						</root>
-						<document schema="meta\kernel-4.6\metadata.xsd" instanceroot="{http://datacite.org/schema/kernel-4}resource" inputinstance="meta\kernel-4.6\example\datacite-example-full-v4.xml" outputinstance="meta\kernel-4.6\example\datacite-example-full-v4.xml"/>
-					</data>
+					<view ltx="654" lty="676" rbx="760" rby="729"/>
 				</component>
 				<component name="contributor" library="core" uid="41" kind="3">
 					<sources>
@@ -300,7 +178,17 @@ used for dividing geoLocationPoint and geoLocationBox coordinates</text>
 						<datapoint pos="0" key="177"/>
 						<datapoint pos="1" key="178"/>
 					</targets>
-					<view ltx="655" lty="760" rbx="751" rby="812"/>
+					<view ltx="655" lty="760" rbx="756" rby="813"/>
+				</component>
+				<component name="contains" library="core" uid="38" kind="5">
+					<sources>
+						<datapoint pos="0" key="170"/>
+						<datapoint pos="1" key="171"/>
+					</sources>
+					<targets>
+						<datapoint pos="0" key="172"/>
+					</targets>
+					<view ltx="475" lty="696" rbx="563" rby="749"/>
 				</component>
 				<component name="metadata" library="xml" uid="2" kind="14">
 					<properties XSLTTargetEncoding="UTF-8"/>
@@ -398,18 +286,8 @@ used for dividing geoLocationPoint and geoLocationBox coordinates</text>
 								</entry>
 							</entry>
 						</root>
-						<document schema="meta\kernel-3.1\metadata.xsd" instanceroot="{http://datacite.org/schema/kernel-3}resource" inputinstance="meta\kernel-3.1\example\datacite-example-full-v3.1.xml" outputinstance="meta\kernel-3.1\example\datacite-example-full-v3.1.xml"/>
+						<document schema="meta\kernel-3.1\metadata.xsd" instanceroot="{http://datacite.org/schema/kernel-3}resource" inputinstance="meta\kernel-3.1\example\datacite-example-complicated-v3.0.xml" outputinstance="meta\kernel-3.1\example\datacite-example-complicated-v3.0.xml"/>
 					</data>
-				</component>
-				<component name="contains" library="core" uid="38" kind="5">
-					<sources>
-						<datapoint pos="0" key="170"/>
-						<datapoint pos="1" key="171"/>
-					</sources>
-					<targets>
-						<datapoint pos="0" key="172"/>
-					</targets>
-					<view ltx="475" lty="696" rbx="558" rby="748"/>
 				</component>
 				<component name="contributors" library="core" uid="42" kind="3">
 					<sources>
@@ -418,9 +296,131 @@ used for dividing geoLocationPoint and geoLocationBox coordinates</text>
 					</sources>
 					<targets>
 						<datapoint pos="0" key="181"/>
-						<datapoint pos="1" key="182"/>
+						<datapoint/>
 					</targets>
-					<view ltx="654" lty="835" rbx="750" rby="887"/>
+					<view ltx="654" lty="835" rbx="755" rby="888"/>
+				</component>
+				<component name="metadata" library="xml" uid="3" kind="14">
+					<properties XSLTTargetEncoding="UTF-8" XSLTDefaultOutput="1"/>
+					<view ltx="1327" lty="-1" rbx="1672" rby="2115"/>
+					<data>
+						<root scrollposition="670">
+							<header>
+								<namespaces>
+									<namespace uid="http://datacite.org/schema/kernel-4"/>
+									<namespace/>
+									<namespace uid="http://www.w3.org/XML/1998/namespace"/>
+									<namespace uid="http://www.altova.com/mapforce"/>
+								</namespaces>
+							</header>
+							<entry name="FileInstance" ns="3" expanded="1">
+								<entry name="document" ns="3" expanded="1" casttotargettypemode="cast-in-subtree">
+									<entry name="resource" inpkey="2" expanded="1">
+										<entry name="identifier" inpkey="3" expanded="1"/>
+										<entry name="creators" inpkey="7" expanded="1">
+											<entry name="creator" inpkey="8" expanded="1">
+												<entry name="creatorName" inpkey="9" expanded="1"/>
+												<entry name="givenName" expanded="1"/>
+												<entry name="familyName" expanded="1"/>
+												<entry name="nameIdentifier" inpkey="10" expanded="1"/>
+												<entry name="affiliation" inpkey="11" expanded="1"/>
+											</entry>
+										</entry>
+										<entry name="titles" inpkey="12" expanded="1">
+											<entry name="title" inpkey="13" expanded="1"/>
+										</entry>
+										<entry name="publisher" inpkey="14" expanded="1"/>
+										<entry name="publicationYear" inpkey="4"/>
+										<entry name="resourceType" inpkey="15" expanded="1"/>
+										<entry name="subjects" inpkey="16" expanded="1">
+											<entry name="subject" inpkey="17" expanded="1">
+												<entry name="subjectScheme" ns="1" type="attribute" inpkey="18"/>
+												<entry name="schemeURI" ns="1" type="attribute" inpkey="19"/>
+												<entry name="lang" ns="2" type="attribute" inpkey="20"/>
+											</entry>
+										</entry>
+										<entry name="contributors" expanded="1">
+											<entry name="contributor" inpkey="22" expanded="1">
+												<entry name="contributorType" ns="1" type="attribute" inpkey="23"/>
+												<entry name="contributorName" inpkey="24" expanded="1"/>
+												<entry name="givenName" expanded="1"/>
+												<entry name="familyName" expanded="1"/>
+												<entry name="nameIdentifier" inpkey="25" expanded="1"/>
+												<entry name="affiliation" inpkey="26" expanded="1"/>
+											</entry>
+										</entry>
+										<entry name="dates" inpkey="27" expanded="1">
+											<entry name="date" inpkey="28" expanded="1">
+												<entry name="dateType" ns="1" type="attribute" inpkey="29"/>
+											</entry>
+										</entry>
+										<entry name="language" inpkey="30"/>
+										<entry name="alternateIdentifiers" inpkey="31" expanded="1">
+											<entry name="alternateIdentifier" inpkey="32" expanded="1"/>
+										</entry>
+										<entry name="relatedIdentifiers" inpkey="33" expanded="1">
+											<entry name="relatedIdentifier" inpkey="34" expanded="1">
+												<entry name="relatedIdentifierType" ns="1" type="attribute" inpkey="35"/>
+												<entry name="relationType" ns="1" type="attribute" inpkey="36"/>
+												<entry name="relatedMetadataScheme" ns="1" type="attribute" inpkey="37"/>
+												<entry name="schemeURI" ns="1" type="attribute" inpkey="38"/>
+												<entry name="schemeType" ns="1" type="attribute" inpkey="39"/>
+											</entry>
+										</entry>
+										<entry name="sizes" inpkey="40" expanded="1">
+											<entry name="size" inpkey="41"/>
+										</entry>
+										<entry name="formats" inpkey="42" expanded="1">
+											<entry name="format" inpkey="43"/>
+										</entry>
+										<entry name="version" inpkey="44"/>
+										<entry name="rightsList" inpkey="45" expanded="1">
+											<entry name="rights" inpkey="46" expanded="1">
+												<entry name="rightsURI" ns="1" type="attribute" inpkey="47"/>
+											</entry>
+										</entry>
+										<entry name="descriptions" inpkey="48" expanded="1">
+											<entry name="description" inpkey="49" expanded="1">
+												<entry name="descriptionType" ns="1" type="attribute" inpkey="50"/>
+												<entry name="lang" ns="2" type="attribute" inpkey="51"/>
+												<entry name="#text" ns="1" inpkey="52"/>
+												<entry name="br" inpkey="53"/>
+											</entry>
+										</entry>
+										<entry name="geoLocations" inpkey="54" expanded="1">
+											<entry name="geoLocation" inpkey="55" expanded="1">
+												<entry name="geoLocationPlace" inpkey="56">
+													<entry name="#text" ns="1" inpkey="57"/>
+												</entry>
+												<entry name="geoLocationPoint" inpkey="58" expanded="1">
+													<entry name="pointLongitude" inpkey="136"/>
+													<entry name="pointLatitude" inpkey="119"/>
+												</entry>
+												<entry name="geoLocationBox" inpkey="59" expanded="1">
+													<entry name="westBoundLongitude" inpkey="163"/>
+													<entry name="eastBoundLongitude" inpkey="151"/>
+													<entry name="southBoundLatitude" inpkey="132"/>
+													<entry name="northBoundLatitude" inpkey="164"/>
+												</entry>
+												<entry name="geoLocationPolygon" expanded="1">
+													<entry name="polygonPoint" expanded="1"/>
+												</entry>
+											</entry>
+										</entry>
+										<entry name="fundingReferences" inpkey="183" expanded="1">
+											<entry name="fundingReference" inpkey="173" expanded="1">
+												<entry name="funderName" inpkey="174"/>
+												<entry name="funderIdentifier" expanded="1"/>
+												<entry name="awardNumber" expanded="1"/>
+												<entry name="awardTitle" expanded="1"/>
+											</entry>
+										</entry>
+									</entry>
+								</entry>
+							</entry>
+						</root>
+						<document schema="meta\kernel-4.6\metadata.xsd" instanceroot="{http://datacite.org/schema/kernel-4}resource" inputinstance="meta\kernel-4.6\example\datacite-example-full-v4.xml" outputinstance="meta\kernel-4.6\example\datacite-example-full-v4.xml"/>
+					</data>
 				</component>
 			</children>
 			<graph directed="1">
@@ -550,11 +550,6 @@ used for dividing geoLocationPoint and geoLocationBox coordinates</text>
 					<vertex vertexkey="72">
 						<edges>
 							<edge vertexkey="20"/>
-						</edges>
-					</vertex>
-					<vertex vertexkey="182">
-						<edges>
-							<edge vertexkey="21"/>
 						</edges>
 					</vertex>
 					<vertex vertexkey="178">
