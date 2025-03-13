@@ -53,16 +53,6 @@ http://www.altova.com/mapforce
 	</xsl:template>
 	<xsl:template name="tbf:tbf4_">
 		<xsl:param name="input" select="/.."/>
-		<xsl:for-each select="$input/@resourceTypeGeneral">
-			<xsl:variable name="var1_current" select="."/>
-			<xsl:attribute name="resourceTypeGeneral">
-				<xsl:value-of select="."/>
-			</xsl:attribute>
-		</xsl:for-each>
-		<xsl:value-of select="$input"/>
-	</xsl:template>
-	<xsl:template name="tbf:tbf5_">
-		<xsl:param name="input" select="/.."/>
 		<xsl:for-each select="$input/@alternateIdentifierType">
 			<xsl:variable name="var1_current" select="."/>
 			<xsl:attribute name="alternateIdentifierType">
@@ -126,9 +116,17 @@ http://www.altova.com/mapforce
 				<xsl:for-each select="ns0:resourceType">
 					<xsl:variable name="var7_cur" select="."/>
 					<resourceType>
-						<xsl:call-template name="tbf:tbf4_">
-							<xsl:with-param name="input" select="."/>
-						</xsl:call-template>
+						<xsl:attribute name="resourceTypeGeneral" namespace="">
+							<xsl:value-of select="@resourceTypeGeneral"/>
+						</xsl:attribute>
+						<xsl:choose>
+							<xsl:when test="(string-length(string(.)) &gt; '0')">
+								<xsl:value-of select="."/>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:value-of select="'Dataset'"/>
+							</xsl:otherwise>
+						</xsl:choose>
 					</resourceType>
 				</xsl:for-each>
 				<xsl:for-each select="ns0:subjects">
@@ -215,7 +213,7 @@ http://www.altova.com/mapforce
 						<xsl:for-each select="ns0:alternateIdentifier">
 							<xsl:variable name="var20_cur" select="."/>
 							<alternateIdentifier>
-								<xsl:call-template name="tbf:tbf5_">
+								<xsl:call-template name="tbf:tbf4_">
 									<xsl:with-param name="input" select="."/>
 								</xsl:call-template>
 							</alternateIdentifier>
