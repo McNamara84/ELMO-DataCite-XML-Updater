@@ -6,13 +6,17 @@ const SaxonJS = require('saxon-js');
 const { exec } = require('child_process');
 const util = require('util');
 const execPromise = util.promisify(exec);
+const os = require('os');
 
 const app = express();
+
+// Temporäres Verzeichnis für Uploads
+const tmpDir = os.tmpdir();
 
 // Konfiguration für multer (Datei-Upload)
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        const uploadDir = path.join(__dirname, 'uploads');
+        const uploadDir = path.join(tmpDir, 'uploads');
         fs.ensureDirSync(uploadDir);
         cb(null, uploadDir);
     },
@@ -23,20 +27,32 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-// Statische Dateien korrekt servieren
-app.use(express.static(path.join(__dirname, 'public'), {
-    setHeaders: (res, filePath) => {
-        if (path.extname(filePath) === '.css') {
-            res.set('Content-Type', 'text/css');
+// Ensure directories exist
+function ensureDirectories() {
+    const dirs = [
+        path.join(tmpDir, 'uploads'),
+        path.join(tmpDir, 'transformed'),
+        path.join(__dirname, 'xslt')
+    ];
+
+    dirs.forEach(dir => {
+        if (!fs.existsSync(dir)) {
+            fs.mkdirSync(dir, { recursive: true });
         }
-    }
-}));
+    });
+}
+
+// Initialize directories
+ensureDirectories();
 
 // XSLT zu SEF kompilieren
 async function compileToSEF(xsltPath) {
     try {
         // SEF-Dateiname generieren
-        const sefPath = xsltPath.replace('.xslt', '.sef.json');
+        const sefPath = path.join(tmpDir, 'sef', path.basename(xsltPath, '.xslt') + '.sef.json');
+
+        // Ensure SEF directory exists
+        fs.ensureDirSync(path.dirname(sefPath));
 
         // Prüfen ob SEF bereits existiert
         if (await fs.pathExists(sefPath)) {
@@ -52,8 +68,8 @@ async function compileToSEF(xsltPath) {
 
         console.log('Kompiliere XSLT zu SEF...');
 
-        // xslt3 Compiler aufrufen - ohne -t Option
-        const xslt3Path = path.join('node_modules', '.bin', 'xslt3');
+        // xslt3 Compiler aufrufen
+        const xslt3Path = path.join(process.cwd(), 'node_modules', '.bin', 'xslt3');
         const command = `"${xslt3Path}" -xsl:"${xsltPath}" -export:"${sefPath}"`;
 
         const { stdout, stderr } = await execPromise(command);
@@ -83,6 +99,9 @@ async function transformXML(inputFile, outputFile, sefPath) {
         console.log('Output File:', outputFile);
         console.log('SEF Path:', sefPath);
 
+        // Ensure output directory exists
+        fs.ensureDirSync(path.dirname(outputFile));
+
         // XML einlesen
         const xmlContent = await fs.readFile(inputFile, 'utf8');
 
@@ -96,7 +115,7 @@ async function transformXML(inputFile, outputFile, sefPath) {
         // Schema-Referenz korrigieren
         let transformedContent = result.principalResult;
         transformedContent = transformedContent.replace(
-            /xsi:schemaLocation="http:\/\/datacite.org\/schema\/kernel-4 file:\/\/\/.*?metadata.xsd"/,
+            /xsi:schemaLocation="http:\/\/datacite.org\/schema\/kernel-4 (?:file:\/\/\/)?.*?metadata.xsd"/,
             'xsi:schemaLocation="http://datacite.org/schema/kernel-4 https://schema.datacite.org/meta/kernel-4/metadata.xsd"'
         );
 
@@ -120,7 +139,7 @@ app.post('/transform', upload.array('xmlFiles'), async (req, res) => {
         console.log('Empfangene Dateien:', files.map(f => f.originalname));
 
         // Ausgabeverzeichnis erstellen
-        const outputDir = path.join(__dirname, 'transformed');
+        const outputDir = path.join(tmpDir, 'transformed');
         fs.ensureDirSync(outputDir);
 
         // XSLT-Pfad
@@ -136,7 +155,7 @@ app.post('/transform', upload.array('xmlFiles'), async (req, res) => {
         // Alle Dateien transformieren
         const transformationResults = await Promise.all(
             files.map(async (file) => {
-                const outputFileName = `transformed-${file.originalname}`;  // Nur der Dateiname
+                const outputFileName = `transformed-${file.originalname}`;
                 const outputFile = path.join(outputDir, outputFileName);
 
                 try {
@@ -145,10 +164,10 @@ app.post('/transform', upload.array('xmlFiles'), async (req, res) => {
                     return {
                         originalName: file.originalname,
                         status: 'success',
-                        // Hier nur den Dateinamen zurückgeben, nicht den vollständigen Pfad
                         transformedPath: outputFileName
                     };
                 } catch (error) {
+                    console.error('Transformation error:', error);
                     return {
                         originalName: file.originalname,
                         status: 'error',
@@ -178,13 +197,20 @@ app.post('/transform', upload.array('xmlFiles'), async (req, res) => {
 // Download-Route für transformierte Dateien
 app.get('/download/:filename', async (req, res) => {
     const filename = req.params.filename;
-    // Sicherheitscheck: Stellen Sie sicher, dass keine Pfad-Traversierung möglich ist
     const sanitizedFilename = path.basename(filename);
-    const filePath = path.join(__dirname, 'transformed', sanitizedFilename);
+    const filePath = path.join(tmpDir, 'transformed', sanitizedFilename);
 
     try {
         if (await fs.pathExists(filePath)) {
-            res.download(filePath);
+            res.download(filePath, sanitizedFilename, (err) => {
+                if (err) {
+                    console.error('Download error:', err);
+                }
+                // Datei nach dem Download löschen
+                fs.remove(filePath).catch(err => {
+                    console.error('Error removing file:', err);
+                });
+            });
         } else {
             res.status(404).json({ error: 'Datei nicht gefunden' });
         }
@@ -194,8 +220,21 @@ app.get('/download/:filename', async (req, res) => {
     }
 });
 
+// Serve static files
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+    console.error('Server error:', err);
+    res.status(500).json({
+        error: 'Server error',
+        details: err.message
+    });
+});
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server läuft auf Port ${PORT}`);
     console.log('XSLT Pfad:', path.join(__dirname, 'xslt', '46.xslt'));
+    console.log('Temp Dir:', tmpDir);
 });
