@@ -11,7 +11,7 @@ const os = require('os');
 const app = express();
 
 // Konstanten für Verzeichnisse definieren
-const XSLT_DIR = path.join(__dirname, 'xslt');
+const XSLT_DIR = path.resolve(__dirname, 'XSLT');
 const UPLOAD_DIR = path.join(os.tmpdir(), 'datacite-uploads');
 const TRANSFORM_DIR = path.join(os.tmpdir(), 'datacite-transformed');
 const SEF_DIR = path.join(os.tmpdir(), 'datacite-sef');
@@ -42,6 +42,27 @@ function ensureDirectories() {
 
 // Initialize directories
 ensureDirectories();
+
+// Funktion zum Finden der XSLT-Datei
+async function findXsltFile() {
+    const possiblePaths = [
+        path.join(XSLT_DIR, '46.xslt'),
+        path.join(__dirname, 'XSLT', '46.xslt'),
+        path.join(__dirname, '..', 'xml-transformer', 'XSLT', '46.xslt'),
+        path.resolve(__dirname, '..', 'XSLT', '46.xslt')
+    ];
+
+    console.log('Suche XSLT-Datei in folgenden Pfaden:', possiblePaths);
+
+    for (const xsltPath of possiblePaths) {
+        if (await fs.pathExists(xsltPath)) {
+            console.log('XSLT-Datei gefunden in:', xsltPath);
+            return xsltPath;
+        }
+    }
+
+    throw new Error('XSLT-Datei konnte in keinem der Verzeichnisse gefunden werden');
+}
 
 // XSLT zu SEF kompilieren
 async function compileToSEF(xsltPath) {
@@ -129,13 +150,8 @@ app.post('/transform', upload.array('xmlFiles'), async (req, res) => {
             throw new Error('Keine Dateien zum Transformieren empfangen');
         }
 
-        const xsltPath = path.join(XSLT_DIR, '46.xslt');
-        console.log('XSLT Pfad:', xsltPath);
-        console.log('XSLT existiert:', await fs.pathExists(xsltPath));
-
-        if (!await fs.pathExists(xsltPath)) {
-            throw new Error(`XSLT-Datei nicht gefunden: ${xsltPath}`);
-        }
+        const xsltPath = await findXsltFile();
+        console.log('Verwende XSLT-Datei:', xsltPath);
 
         const sefPath = await compileToSEF(xsltPath);
         const transformationResults = await Promise.all(
