@@ -84,11 +84,36 @@ async function compileToSEF(xsltPath) {
         console.log('Kompiliere XSLT zu SEF...');
         console.log('XSLT Pfad:', xsltPath);
 
-        // xslt3 Compiler aufrufen
-        const xslt3Path = path.resolve(__dirname, '..', 'node_modules', '.bin', 'xslt3');
-        const command = `"${xslt3Path}" -xsl:"${xsltPath}" -export:"${sefPath}"`;
+        // Verschiedene mögliche Pfade zum xslt3 Compiler
+        const possibleXslt3Paths = [
+            path.join(process.cwd(), 'node_modules', '.bin', 'xslt3'),
+            path.join(__dirname, 'node_modules', '.bin', 'xslt3'),
+            path.join(__dirname, '..', 'node_modules', '.bin', 'xslt3'),
+            path.resolve(__dirname, '..', 'node_modules', '.bin', 'xslt3'),
+            'xslt3' // Falls global installiert
+        ];
 
+        console.log('Mögliche xslt3 Compiler Pfade:', possibleXslt3Paths);
+
+        let xslt3Path = null;
+        for (const testPath of possibleXslt3Paths) {
+            try {
+                await fs.access(testPath);
+                xslt3Path = testPath;
+                console.log('Gefundener xslt3 Compiler:', xslt3Path);
+                break;
+            } catch (e) {
+                console.log('Pfad nicht gefunden:', testPath);
+            }
+        }
+
+        if (!xslt3Path) {
+            throw new Error('xslt3 Compiler konnte nicht gefunden werden');
+        }
+
+        const command = `"${xslt3Path}" -xsl:"${xsltPath}" -export:"${sefPath}"`;
         console.log('Ausführe Befehl:', command);
+
         const { stdout, stderr } = await execPromise(command);
 
         if (stderr) {
