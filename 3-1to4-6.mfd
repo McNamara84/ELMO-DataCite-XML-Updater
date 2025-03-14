@@ -149,15 +149,6 @@ used for dividing geoLocationPoint and geoLocationBox coordinates</text>
 						</comment>
 					</data>
 				</component>
-				<component name="constant" library="core" uid="39" kind="2">
-					<targets>
-						<datapoint pos="0" key="165"/>
-					</targets>
-					<view ltx="345" lty="337" rbx="418" rby="353"/>
-					<data>
-						<constant value="Funder" datatype="string"/>
-					</data>
-				</component>
 				<component name="contributor" library="core" uid="41" kind="3">
 					<sources>
 						<datapoint pos="0" key="175"/>
@@ -167,7 +158,115 @@ used for dividing geoLocationPoint and geoLocationBox coordinates</text>
 						<datapoint pos="0" key="177"/>
 						<datapoint pos="1" key="178"/>
 					</targets>
-					<view ltx="630" lty="365" rbx="731" rby="418"/>
+					<view ltx="639" lty="301" rbx="740" rby="354"/>
+				</component>
+				<component name="exists" library="core" uid="72" kind="5">
+					<sources>
+						<datapoint pos="0" key="197"/>
+					</sources>
+					<targets>
+						<datapoint pos="0" key="198"/>
+					</targets>
+					<view ltx="371" lty="660" rbx="439" rby="697"/>
+				</component>
+				<component name="string-length" library="core" uid="51" kind="5">
+					<sources>
+						<datapoint pos="0" key="186"/>
+					</sources>
+					<targets>
+						<datapoint pos="0" key="187"/>
+					</targets>
+					<view ltx="628" lty="661" rbx="714" rby="698"/>
+				</component>
+				<component name="constant" library="core" uid="57" kind="2">
+					<targets>
+						<datapoint pos="0" key="195"/>
+					</targets>
+					<view ltx="826" lty="761" rbx="901" rby="777"/>
+					<data>
+						<constant value="Dataset" datatype="string"/>
+					</data>
+				</component>
+				<component name="if-else" library="core" uid="86" kind="4">
+					<sources>
+						<datapoint pos="0" key="208"/>
+						<datapoint pos="1" key="209"/>
+						<datapoint pos="2" key="210"/>
+					</sources>
+					<targets>
+						<datapoint pos="0" key="211"/>
+					</targets>
+					<view ltx="463" lty="661" rbx="557" rby="732"/>
+					<data>
+						<comment>
+							<text>if resourceType exists,
+check if it contains string with length &gt;0</text>
+						</comment>
+					</data>
+				</component>
+				<component name="greater" library="core" uid="53" kind="5">
+					<sources>
+						<datapoint pos="0" key="188"/>
+						<datapoint pos="1" key="189"/>
+					</sources>
+					<targets>
+						<datapoint pos="0" key="190"/>
+					</targets>
+					<view ltx="758" lty="661" rbx="817" rby="714"/>
+				</component>
+				<component name="constant" library="core" uid="54" kind="2">
+					<targets>
+						<datapoint pos="0" key="185"/>
+					</targets>
+					<view ltx="668" lty="698" rbx="714" rby="714"/>
+					<data>
+						<constant value="0" datatype="string"/>
+					</data>
+				</component>
+				<component name="logical-and" library="core" uid="85" kind="5" growable="1" growablebasename="value">
+					<sources>
+						<datapoint pos="0" key="205"/>
+						<datapoint pos="1" key="206"/>
+					</sources>
+					<targets>
+						<datapoint pos="0" key="207"/>
+					</targets>
+					<view ltx="853" lty="669" rbx="930" rby="723"/>
+				</component>
+				<component name="if-else" library="core" uid="56" kind="4">
+					<sources>
+						<datapoint pos="0" key="191"/>
+						<datapoint pos="1" key="192"/>
+						<datapoint pos="2" key="193"/>
+					</sources>
+					<targets>
+						<datapoint pos="0" key="194"/>
+					</targets>
+					<view ltx="961" lty="645" rbx="1055" rby="716"/>
+					<data>
+						<comment>
+							<text>if resourceType is empty (string !&gt;0) or does not exst, 
+insert &quot;Dataset&quot;, because corpus consists of datasets only</text>
+						</comment>
+					</data>
+				</component>
+				<component name="if-else" library="core" uid="74" kind="4">
+					<sources>
+						<datapoint pos="0" key="204"/>
+						<datapoint pos="1" key="203"/>
+						<datapoint pos="2" key="202"/>
+					</sources>
+					<targets>
+						<datapoint pos="0" key="201"/>
+					</targets>
+					<view ltx="969" lty="776" rbx="1063" rby="847"/>
+					<data>
+						<comment>
+							<text>if resourceType does not exist,
+map &quot;Dataset&quot; to resourceTypeGeneral 
+because corpus consists of datasets only</text>
+						</comment>
+					</data>
 				</component>
 				<component name="contributors" library="core" uid="42" kind="3">
 					<sources>
@@ -178,23 +277,35 @@ used for dividing geoLocationPoint and geoLocationBox coordinates</text>
 						<datapoint pos="0" key="181"/>
 						<datapoint/>
 					</targets>
-					<view ltx="629" lty="440" rbx="730" rby="493"/>
+					<view ltx="638" lty="376" rbx="739" rby="429"/>
 				</component>
-				<component name="contains" library="core" uid="38" kind="5">
+				<component name="nameIdentifier" library="core" uid="87" kind="3">
 					<sources>
-						<datapoint pos="0" key="170"/>
-						<datapoint pos="1" key="171"/>
+						<datapoint pos="0" key="213"/>
+						<datapoint pos="1" key="212"/>
 					</sources>
 					<targets>
-						<datapoint pos="0" key="172"/>
+						<datapoint pos="0" key="214"/>
+						<datapoint/>
 					</targets>
-					<view ltx="450" lty="301" rbx="538" rby="354"/>
+					<view ltx="638" lty="442" rbx="739" rby="495"/>
+				</component>
+				<component name="nameIdentifierScheme" library="core" uid="88" kind="3">
+					<sources>
+						<datapoint pos="0" key="218"/>
+						<datapoint pos="1" key="217"/>
+					</sources>
+					<targets>
+						<datapoint pos="0" key="216"/>
+						<datapoint/>
+					</targets>
+					<view ltx="638" lty="504" rbx="768" rby="557"/>
 				</component>
 				<component name="metadata" library="xml" uid="3" kind="14">
 					<properties XSLTTargetEncoding="UTF-8" XSLTDefaultOutput="1"/>
 					<view ltx="1327" lty="-1" rbx="1672" rby="2115"/>
 					<data>
-						<root scrollposition="644">
+						<root scrollposition="715">
 							<header>
 								<namespaces>
 									<namespace uid="http://datacite.org/schema/kernel-4"/>
@@ -302,7 +413,10 @@ used for dividing geoLocationPoint and geoLocationBox coordinates</text>
 										<entry name="fundingReferences" inpkey="183" expanded="1">
 											<entry name="fundingReference" inpkey="173" expanded="1">
 												<entry name="funderName" inpkey="174"/>
-												<entry name="funderIdentifier" expanded="1"/>
+												<entry name="funderIdentifier" inpkey="215" expanded="1">
+													<entry name="funderIdentifierType" ns="1" type="attribute" inpkey="224"/>
+													<entry name="schemeURI" ns="1" type="attribute" inpkey="225"/>
+												</entry>
 												<entry name="awardNumber" expanded="1"/>
 												<entry name="awardTitle" expanded="1"/>
 											</entry>
@@ -314,9 +428,75 @@ used for dividing geoLocationPoint and geoLocationBox coordinates</text>
 						<document schema="meta\kernel-4.6\metadata.xsd" instanceroot="{http://datacite.org/schema/kernel-4}resource" inputinstance="meta\kernel-4.6\example\datacite-example-full-v4.xml" outputinstance="meta\kernel-4.6\example\datacite-example-full-v4.xml"/>
 					</data>
 				</component>
+				<component name="contributorName" library="core" uid="40" kind="3">
+					<sources>
+						<datapoint pos="0" key="166"/>
+						<datapoint pos="1" key="167"/>
+					</sources>
+					<targets>
+						<datapoint pos="0" key="168"/>
+						<datapoint pos="1" key="169"/>
+					</targets>
+					<view ltx="638" lty="217" rbx="744" rby="270"/>
+				</component>
+				<component name="contains" library="core" uid="38" kind="5">
+					<sources>
+						<datapoint pos="0" key="170"/>
+						<datapoint pos="1" key="171"/>
+					</sources>
+					<targets>
+						<datapoint pos="0" key="172"/>
+					</targets>
+					<view ltx="452" lty="399" rbx="540" rby="452"/>
+				</component>
+				<component name="constant" library="core" uid="39" kind="2">
+					<targets>
+						<datapoint pos="0" key="165"/>
+					</targets>
+					<view ltx="353" lty="435" rbx="426" rby="451"/>
+					<data>
+						<constant value="Funder" datatype="string"/>
+					</data>
+				</component>
+				<component name="schemeURI" library="core" uid="90" kind="3">
+					<sources>
+						<datapoint pos="0" key="221"/>
+						<datapoint pos="1" key="222"/>
+					</sources>
+					<targets>
+						<datapoint pos="0" key="223"/>
+						<datapoint/>
+					</targets>
+					<view ltx="643" lty="569" rbx="744" rby="622"/>
+				</component>
+				<component name="value-map" library="core" uid="89" kind="23">
+					<sources>
+						<datapoint pos="0" key="220"/>
+					</sources>
+					<targets>
+						<datapoint pos="0" key="226"/>
+					</targets>
+					<view ltx="819" lty="511" rbx="894" rby="548"/>
+					<data>
+						<valuemap enableDefaultValue="1">
+							<valuemapTable>
+								<entry from="Crossref Funder ID" to="Crossref Funder ID"/>
+								<entry from="GRID" to="GRID"/>
+								<entry from="ISNI" to="ISNI"/>
+								<entry from="ROR" to="ROR"/>
+							</valuemapTable>
+							<input name="input" type="string"/>
+							<result name="result" type="string" defaultValue="Other"/>
+						</valuemap>
+						<comment>
+							<text>mapping value of nameIdentifierScheme to contolled List for funderIdentifierType in 4.6
+i.e. ORCID is not in the controlled list, so it is mapped to &quot;Other&quot;</text>
+						</comment>
+					</data>
+				</component>
 				<component name="metadata" library="xml" uid="2" kind="14">
 					<properties XSLTTargetEncoding="UTF-8"/>
-					<view rbx="320" rby="2115"/>
+					<view ltx="2" rbx="322" rby="2115"/>
 					<data>
 						<root>
 							<header>
@@ -354,7 +534,10 @@ used for dividing geoLocationPoint and geoLocationBox coordinates</text>
 											<entry name="contributor" outkey="74" expanded="1">
 												<entry name="contributorType" ns="1" type="attribute" outkey="75"/>
 												<entry name="contributorName" outkey="76"/>
-												<entry name="nameIdentifier" outkey="77" expanded="1"/>
+												<entry name="nameIdentifier" outkey="77" expanded="1">
+													<entry name="nameIdentifierScheme" ns="1" type="attribute" outkey="219"/>
+													<entry name="schemeURI" ns="1" type="attribute" outkey="227"/>
+												</entry>
 												<entry name="affiliation" outkey="78" expanded="1"/>
 											</entry>
 										</entry>
@@ -412,126 +595,7 @@ used for dividing geoLocationPoint and geoLocationBox coordinates</text>
 								</entry>
 							</entry>
 						</root>
-						<document schema="meta\kernel-3.1\metadata.xsd" instanceroot="{http://datacite.org/schema/kernel-3}resource" inputinstance="meta\kernel-3.1\example\datacite-example-complicated-v3.0.xml" outputinstance="meta\kernel-3.1\example\datacite-example-complicated-v3.0.xml"/>
-					</data>
-				</component>
-				<component name="contributorName" library="core" uid="40" kind="3">
-					<sources>
-						<datapoint pos="0" key="166"/>
-						<datapoint pos="1" key="167"/>
-					</sources>
-					<targets>
-						<datapoint pos="0" key="168"/>
-						<datapoint pos="1" key="169"/>
-					</targets>
-					<view ltx="629" lty="281" rbx="735" rby="334"/>
-				</component>
-				<component name="exists" library="core" uid="72" kind="5">
-					<sources>
-						<datapoint pos="0" key="197"/>
-					</sources>
-					<targets>
-						<datapoint pos="0" key="198"/>
-					</targets>
-					<view ltx="371" lty="660" rbx="439" rby="697"/>
-				</component>
-				<component name="string-length" library="core" uid="51" kind="5">
-					<sources>
-						<datapoint pos="0" key="186"/>
-					</sources>
-					<targets>
-						<datapoint pos="0" key="187"/>
-					</targets>
-					<view ltx="628" lty="661" rbx="714" rby="698"/>
-				</component>
-				<component name="constant" library="core" uid="57" kind="2">
-					<targets>
-						<datapoint pos="0" key="195"/>
-					</targets>
-					<view ltx="826" lty="761" rbx="901" rby="777"/>
-					<data>
-						<constant value="Dataset" datatype="string"/>
-					</data>
-				</component>
-				<component name="if-else" library="core" uid="74" kind="4">
-					<sources>
-						<datapoint pos="0" key="204"/>
-						<datapoint pos="1" key="203"/>
-						<datapoint pos="2" key="202"/>
-					</sources>
-					<targets>
-						<datapoint pos="0" key="201"/>
-					</targets>
-					<view ltx="969" lty="776" rbx="1063" rby="847"/>
-					<data>
-						<comment>
-							<text>if resourceType does not exist,
-map &quot;Dataset&quot; to resourceTypeGeneral 
-because corpus consists of datasets only</text>
-						</comment>
-					</data>
-				</component>
-				<component name="if-else" library="core" uid="86" kind="4">
-					<sources>
-						<datapoint pos="0" key="208"/>
-						<datapoint pos="1" key="209"/>
-						<datapoint pos="2" key="210"/>
-					</sources>
-					<targets>
-						<datapoint pos="0" key="211"/>
-					</targets>
-					<view ltx="463" lty="661" rbx="557" rby="732"/>
-					<data>
-						<comment>
-							<text>if resourceType exists,
-check if it contains string with length &gt;0</text>
-						</comment>
-					</data>
-				</component>
-				<component name="greater" library="core" uid="53" kind="5">
-					<sources>
-						<datapoint pos="0" key="188"/>
-						<datapoint pos="1" key="189"/>
-					</sources>
-					<targets>
-						<datapoint pos="0" key="190"/>
-					</targets>
-					<view ltx="758" lty="661" rbx="817" rby="714"/>
-				</component>
-				<component name="constant" library="core" uid="54" kind="2">
-					<targets>
-						<datapoint pos="0" key="185"/>
-					</targets>
-					<view ltx="668" lty="698" rbx="714" rby="714"/>
-					<data>
-						<constant value="0" datatype="string"/>
-					</data>
-				</component>
-				<component name="logical-and" library="core" uid="85" kind="5" growable="1" growablebasename="value">
-					<sources>
-						<datapoint pos="0" key="205"/>
-						<datapoint pos="1" key="206"/>
-					</sources>
-					<targets>
-						<datapoint pos="0" key="207"/>
-					</targets>
-					<view ltx="853" lty="669" rbx="930" rby="723"/>
-				</component>
-				<component name="if-else" library="core" uid="56" kind="4">
-					<sources>
-						<datapoint pos="0" key="191"/>
-						<datapoint pos="1" key="192"/>
-						<datapoint pos="2" key="193"/>
-					</sources>
-					<targets>
-						<datapoint pos="0" key="194"/>
-					</targets>
-					<view ltx="961" lty="645" rbx="1055" rby="716"/>
-					<data>
-						<comment>
-							<text>if resourceType is empty (string !&gt;0) or does not exst, 
-insert &quot;Dataset&quot;, because corpus consists of datasets only</text>
-						</comment>
+						<document schema="meta\kernel-3.1\metadata.xsd" instanceroot="{http://datacite.org/schema/kernel-3}resource" inputinstance="meta\kernel-3.1\example\datacite-example-full-v3.1.xml" outputinstance="meta\kernel-3.1\example\datacite-example-full-v3.1.xml"/>
 					</data>
 				</component>
 			</children>
@@ -678,6 +742,7 @@ insert &quot;Dataset&quot;, because corpus consists of datasets only</text>
 					<vertex vertexkey="77">
 						<edges>
 							<edge vertexkey="25" edgekey="25"/>
+							<edge vertexkey="213"/>
 						</edges>
 					</vertex>
 					<vertex vertexkey="78">
@@ -918,6 +983,9 @@ insert &quot;Dataset&quot;, because corpus consists of datasets only</text>
 							<edge vertexkey="167"/>
 							<edge vertexkey="176"/>
 							<edge vertexkey="180"/>
+							<edge vertexkey="212"/>
+							<edge vertexkey="217"/>
+							<edge vertexkey="222"/>
 						</edges>
 					</vertex>
 					<vertex vertexkey="165">
@@ -1004,6 +1072,36 @@ insert &quot;Dataset&quot;, because corpus consists of datasets only</text>
 					<vertex vertexkey="190">
 						<edges>
 							<edge vertexkey="205"/>
+						</edges>
+					</vertex>
+					<vertex vertexkey="214">
+						<edges>
+							<edge vertexkey="215"/>
+						</edges>
+					</vertex>
+					<vertex vertexkey="219">
+						<edges>
+							<edge vertexkey="218"/>
+						</edges>
+					</vertex>
+					<vertex vertexkey="216">
+						<edges>
+							<edge vertexkey="220"/>
+						</edges>
+					</vertex>
+					<vertex vertexkey="227">
+						<edges>
+							<edge vertexkey="221"/>
+						</edges>
+					</vertex>
+					<vertex vertexkey="226">
+						<edges>
+							<edge vertexkey="224"/>
+						</edges>
+					</vertex>
+					<vertex vertexkey="223">
+						<edges>
+							<edge vertexkey="225"/>
 						</edges>
 					</vertex>
 				</vertices>

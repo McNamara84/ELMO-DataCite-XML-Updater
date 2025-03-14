@@ -8,7 +8,7 @@ OVERWRITTEN WHEN YOU RE-RUN CODE GENERATION.
 Refer to the Altova MapForce Documentation for further details.
 http://www.altova.com/mapforce
 -->
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns0="http://datacite.org/schema/kernel-3" xmlns:tbf="http://www.altova.com/MapForce/UDF/tbf" xmlns:agt="http://www.altova.com/Mapforce/agt" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xml="http://www.w3.org/XML/1998/namespace" exclude-result-prefixes="ns0 tbf agt xs">
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns0="http://datacite.org/schema/kernel-3" xmlns:tbf="http://www.altova.com/MapForce/UDF/tbf" xmlns:vmf="http://www.altova.com/MapForce/UDF/vmf" xmlns:agt="http://www.altova.com/Mapforce/agt" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xml="http://www.w3.org/XML/1998/namespace" exclude-result-prefixes="ns0 tbf vmf agt xs">
 	<xsl:template name="tbf:tbf1_">
 		<xsl:param name="input" select="/.."/>
 		<xsl:for-each select="$input/@identifierType">
@@ -60,6 +60,26 @@ http://www.altova.com/mapforce
 			</xsl:attribute>
 		</xsl:for-each>
 		<xsl:value-of select="$input"/>
+	</xsl:template>
+	<xsl:template name="vmf:vmf1_inputtoresult">
+		<xsl:param name="input" select="/.."/>
+		<xsl:choose>
+			<xsl:when test="$input='Crossref Funder ID'">
+				<xsl:value-of select="'Crossref Funder ID'"/>
+			</xsl:when>
+			<xsl:when test="$input='GRID'">
+				<xsl:value-of select="'GRID'"/>
+			</xsl:when>
+			<xsl:when test="$input='ISNI'">
+				<xsl:value-of select="'ISNI'"/>
+			</xsl:when>
+			<xsl:when test="$input='ROR'">
+				<xsl:value-of select="'ROR'"/>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="'Other'"/>
+			</xsl:otherwise>
+		</xsl:choose>
 	</xsl:template>
 	<xsl:output method="xml" encoding="UTF-8" indent="yes"/>
 	<xsl:template name="agt:MapTometadata_var2">
@@ -470,6 +490,32 @@ http://www.altova.com/mapforce
 											<xsl:value-of select="ns0:contributorName"/>
 										</funderName>
 									</xsl:if>
+									<xsl:for-each select="(./ns0:nameIdentifier)[contains($var54_filter/@contributorType, 'Funder')]">
+										<xsl:variable name="var55_filter" select="."/>
+										<funderIdentifier>
+											<xsl:if test="contains($var54_filter/@contributorType, 'Funder')">
+												<xsl:attribute name="funderIdentifierType" namespace="">
+													<xsl:variable name="var56_nested">
+														<xsl:call-template name="vmf:vmf1_inputtoresult">
+															<xsl:with-param name="input" select="string(@nameIdentifierScheme)"/>
+														</xsl:call-template>
+													</xsl:variable>
+													<xsl:value-of select="$var56_nested"/>
+												</xsl:attribute>
+											</xsl:if>
+											<xsl:for-each select="(./@schemeURI)[contains($var54_filter/@contributorType, 'Funder')]">
+												<xsl:variable name="var57_filter" select="."/>
+												<xsl:attribute name="schemeURI" namespace="">
+													<xsl:value-of select="."/>
+												</xsl:attribute>
+											</xsl:for-each>
+											<xsl:for-each select="@schemeURI">
+												<xsl:variable name="var58_filter" select="."/>
+												<xsl:copy-of select="/.."/>
+											</xsl:for-each>
+											<xsl:value-of select="."/>
+										</funderIdentifier>
+									</xsl:for-each>
 								</fundingReference>
 							</xsl:for-each>
 						</fundingReferences>

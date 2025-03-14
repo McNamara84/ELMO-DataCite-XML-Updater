@@ -113,7 +113,7 @@
 |  |  | fundingReferences>fundingReference | O |  |
 | contributorName IF contributorType="Funder" |  | fundingReferences>fundingReference>funderName | If FundingReference is used, then funderName is mandatory. | Contributor with contributorType "Funder" |
 | contributors>contributor>nameIdentifier IF  contributorType="Funder" |  | fundingReferences>fundingReference>funderIdentifier |  | contributor>nameIdentifier IF Type ist Funder |
-| contributors>contributor>nameIdentifier=nameIdentifierType IF contributorType="Funder" |  | fundingReferences>fundingReference>funderIdentifier=funderIdentifierType | If funderIdentifier is used, funderIdentifierType is mandatory. | contributor>nameIdentifierType IF Type ist Funder |
+| contributors>contributor>nameIdentifier=nameIdentifierType IF contributorType="Funder" |  | fundingReferences>fundingReference>funderIdentifier=funderIdentifierType | If funderIdentifier is used, funderIdentifierType is mandatory. | for contributor with tpye "Funder, mapping value of nameIdentifierScheme to contolled List for funderIdentifierType in 4.6; i.e. ORCID is not in the controlled list, so it is mapped to "Other" |
 | contributors>contributor>nameIdentifier=schemeURI IF contributorType="Funder" |  | fundingReferences>fundingReference>funderIdentifier=schemeURI |  |  IF Type is Funder |
 | / |  | fundingReferences>fundingReference>awardNumber |  | cannot be mapped, because information is not given in 3.1 |
 | / |  | fundingReferences>fundingReference>awardNumber=awardURI |  | cannot be mapped, because information is not given in 3.1 |
