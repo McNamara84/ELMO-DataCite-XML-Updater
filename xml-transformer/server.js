@@ -144,7 +144,9 @@ app.post('/transform', upload.array('xmlFiles'), async (req, res) => {
 
         // XSLT-Pfad
         const xsltPath = path.join(__dirname, 'xslt', '46.xslt');
-
+        console.log('Current directory:', process.cwd());
+        console.log('XSLT path:', xsltPath);
+        console.log('XSLT exists:', await fs.pathExists(xsltPath));
         if (!await fs.pathExists(xsltPath)) {
             throw new Error(`XSLT-Datei nicht gefunden: ${xsltPath}`);
         }
@@ -186,10 +188,15 @@ app.post('/transform', upload.array('xmlFiles'), async (req, res) => {
         });
 
     } catch (error) {
-        console.error('Fehler bei der Verarbeitung:', error);
+        console.error('Detailed error:', {
+            message: error.message,
+            stack: error.stack,
+            code: error.code
+        });
         res.status(500).json({
             error: 'Fehler bei der Transformation',
-            details: error.message
+            details: error.message,
+            path: xsltPath
         });
     }
 });
