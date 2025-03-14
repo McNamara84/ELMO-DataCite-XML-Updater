@@ -149,26 +149,6 @@ used for dividing geoLocationPoint and geoLocationBox coordinates</text>
 						</comment>
 					</data>
 				</component>
-				<component name="constant" library="core" uid="39" kind="2">
-					<targets>
-						<datapoint pos="0" key="165"/>
-					</targets>
-					<view ltx="370" lty="732" rbx="443" rby="748"/>
-					<data>
-						<constant value="Funder" datatype="string"/>
-					</data>
-				</component>
-				<component name="contributorName" library="core" uid="40" kind="3">
-					<sources>
-						<datapoint pos="0" key="166"/>
-						<datapoint pos="1" key="167"/>
-					</sources>
-					<targets>
-						<datapoint pos="0" key="168"/>
-						<datapoint pos="1" key="169"/>
-					</targets>
-					<view ltx="654" lty="676" rbx="760" rby="729"/>
-				</component>
 				<component name="contributor" library="core" uid="41" kind="3">
 					<sources>
 						<datapoint pos="0" key="175"/>
@@ -178,115 +158,114 @@ used for dividing geoLocationPoint and geoLocationBox coordinates</text>
 						<datapoint pos="0" key="177"/>
 						<datapoint pos="1" key="178"/>
 					</targets>
-					<view ltx="655" lty="760" rbx="756" rby="813"/>
+					<view ltx="639" lty="301" rbx="740" rby="354"/>
 				</component>
-				<component name="contains" library="core" uid="38" kind="5">
+				<component name="exists" library="core" uid="72" kind="5">
 					<sources>
-						<datapoint pos="0" key="170"/>
-						<datapoint pos="1" key="171"/>
+						<datapoint pos="0" key="197"/>
 					</sources>
 					<targets>
-						<datapoint pos="0" key="172"/>
+						<datapoint pos="0" key="198"/>
 					</targets>
-					<view ltx="475" lty="696" rbx="563" rby="749"/>
+					<view ltx="371" lty="660" rbx="439" rby="697"/>
 				</component>
-				<component name="metadata" library="xml" uid="2" kind="14">
-					<properties XSLTTargetEncoding="UTF-8"/>
-					<view rbx="320" rby="2115"/>
+				<component name="string-length" library="core" uid="51" kind="5">
+					<sources>
+						<datapoint pos="0" key="186"/>
+					</sources>
+					<targets>
+						<datapoint pos="0" key="187"/>
+					</targets>
+					<view ltx="628" lty="661" rbx="714" rby="698"/>
+				</component>
+				<component name="constant" library="core" uid="57" kind="2">
+					<targets>
+						<datapoint pos="0" key="195"/>
+					</targets>
+					<view ltx="826" lty="761" rbx="901" rby="777"/>
 					<data>
-						<root>
-							<header>
-								<namespaces>
-									<namespace uid="http://datacite.org/schema/kernel-3"/>
-									<namespace/>
-									<namespace uid="http://www.w3.org/XML/1998/namespace"/>
-									<namespace uid="http://www.altova.com/mapforce"/>
-								</namespaces>
-							</header>
-							<entry name="FileInstance" ns="3" expanded="1">
-								<entry name="document" ns="3" expanded="1" casttotargettypemode="cast-in-subtree">
-									<entry name="resource" outkey="1" expanded="1">
-										<entry name="identifier" outkey="5" expanded="1"/>
-										<entry name="creators" outkey="60" expanded="1">
-											<entry name="creator" outkey="61" expanded="1">
-												<entry name="creatorName" outkey="62"/>
-												<entry name="nameIdentifier" outkey="63" expanded="1"/>
-												<entry name="affiliation" outkey="64" expanded="1"/>
-											</entry>
-										</entry>
-										<entry name="titles" outkey="65" expanded="1">
-											<entry name="title" outkey="66" expanded="1"/>
-										</entry>
-										<entry name="publisher" outkey="67"/>
-										<entry name="publicationYear" outkey="6"/>
-										<entry name="subjects" outkey="68" expanded="1">
-											<entry name="subject" outkey="69" expanded="1">
-												<entry name="subjectScheme" ns="1" type="attribute" outkey="70"/>
-												<entry name="schemeURI" ns="1" type="attribute" outkey="71"/>
-												<entry name="lang" ns="2" type="attribute" outkey="72"/>
-											</entry>
-										</entry>
-										<entry name="contributors" outkey="73" expanded="1">
-											<entry name="contributor" outkey="74" expanded="1">
-												<entry name="contributorType" ns="1" type="attribute" outkey="75"/>
-												<entry name="contributorName" outkey="76"/>
-												<entry name="nameIdentifier" outkey="77" expanded="1"/>
-												<entry name="affiliation" outkey="78" expanded="1"/>
-											</entry>
-										</entry>
-										<entry name="dates" outkey="79" expanded="1">
-											<entry name="date" outkey="80" expanded="1">
-												<entry name="dateType" ns="1" type="attribute" outkey="81"/>
-											</entry>
-										</entry>
-										<entry name="language" outkey="82"/>
-										<entry name="resourceType" outkey="83" expanded="1"/>
-										<entry name="alternateIdentifiers" outkey="84" expanded="1">
-											<entry name="alternateIdentifier" outkey="85" expanded="1"/>
-										</entry>
-										<entry name="relatedIdentifiers" outkey="86" expanded="1">
-											<entry name="relatedIdentifier" outkey="87" expanded="1">
-												<entry name="relatedIdentifierType" ns="1" type="attribute" outkey="88"/>
-												<entry name="relationType" ns="1" type="attribute" outkey="89"/>
-												<entry name="relatedMetadataScheme" ns="1" type="attribute" outkey="90"/>
-												<entry name="schemeURI" ns="1" type="attribute" outkey="91"/>
-												<entry name="schemeType" ns="1" type="attribute" outkey="92"/>
-											</entry>
-										</entry>
-										<entry name="sizes" outkey="93" expanded="1">
-											<entry name="size" outkey="94"/>
-										</entry>
-										<entry name="formats" outkey="95" expanded="1">
-											<entry name="format" outkey="96"/>
-										</entry>
-										<entry name="version" outkey="97"/>
-										<entry name="rightsList" outkey="98" expanded="1">
-											<entry name="rights" outkey="99" expanded="1">
-												<entry name="rightsURI" ns="1" type="attribute" outkey="100"/>
-											</entry>
-										</entry>
-										<entry name="descriptions" outkey="101" expanded="1">
-											<entry name="description" outkey="102" expanded="1">
-												<entry name="descriptionType" ns="1" type="attribute" outkey="103"/>
-												<entry name="lang" ns="2" type="attribute" outkey="104"/>
-												<entry name="#text" ns="1" outkey="105"/>
-												<entry name="br" outkey="106"/>
-											</entry>
-										</entry>
-										<entry name="geoLocations" outkey="107" expanded="1">
-											<entry name="geoLocation" outkey="108" expanded="1">
-												<entry name="geoLocationPoint" outkey="109"/>
-												<entry name="geoLocationBox" outkey="110"/>
-												<entry name="geoLocationPlace" outkey="111" expanded="1">
-													<entry name="#text" ns="1" outkey="112"/>
-												</entry>
-											</entry>
-										</entry>
-									</entry>
-								</entry>
-							</entry>
-						</root>
-						<document schema="meta\kernel-3.1\metadata.xsd" instanceroot="{http://datacite.org/schema/kernel-3}resource" inputinstance="meta\kernel-3.1\example\datacite-example-complicated-v3.0.xml" outputinstance="meta\kernel-3.1\example\datacite-example-complicated-v3.0.xml"/>
+						<constant value="Dataset" datatype="string"/>
+					</data>
+				</component>
+				<component name="if-else" library="core" uid="86" kind="4">
+					<sources>
+						<datapoint pos="0" key="208"/>
+						<datapoint pos="1" key="209"/>
+						<datapoint pos="2" key="210"/>
+					</sources>
+					<targets>
+						<datapoint pos="0" key="211"/>
+					</targets>
+					<view ltx="463" lty="661" rbx="557" rby="732"/>
+					<data>
+						<comment>
+							<text>if resourceType exists,
+check if it contains string with length &gt;0</text>
+						</comment>
+					</data>
+				</component>
+				<component name="greater" library="core" uid="53" kind="5">
+					<sources>
+						<datapoint pos="0" key="188"/>
+						<datapoint pos="1" key="189"/>
+					</sources>
+					<targets>
+						<datapoint pos="0" key="190"/>
+					</targets>
+					<view ltx="758" lty="661" rbx="817" rby="714"/>
+				</component>
+				<component name="constant" library="core" uid="54" kind="2">
+					<targets>
+						<datapoint pos="0" key="185"/>
+					</targets>
+					<view ltx="668" lty="698" rbx="714" rby="714"/>
+					<data>
+						<constant value="0" datatype="string"/>
+					</data>
+				</component>
+				<component name="logical-and" library="core" uid="85" kind="5" growable="1" growablebasename="value">
+					<sources>
+						<datapoint pos="0" key="205"/>
+						<datapoint pos="1" key="206"/>
+					</sources>
+					<targets>
+						<datapoint pos="0" key="207"/>
+					</targets>
+					<view ltx="853" lty="669" rbx="930" rby="723"/>
+				</component>
+				<component name="if-else" library="core" uid="56" kind="4">
+					<sources>
+						<datapoint pos="0" key="191"/>
+						<datapoint pos="1" key="192"/>
+						<datapoint pos="2" key="193"/>
+					</sources>
+					<targets>
+						<datapoint pos="0" key="194"/>
+					</targets>
+					<view ltx="961" lty="645" rbx="1055" rby="716"/>
+					<data>
+						<comment>
+							<text>if resourceType is empty (string !&gt;0) or does not exst, 
+insert &quot;Dataset&quot;, because corpus consists of datasets only</text>
+						</comment>
+					</data>
+				</component>
+				<component name="if-else" library="core" uid="74" kind="4">
+					<sources>
+						<datapoint pos="0" key="204"/>
+						<datapoint pos="1" key="203"/>
+						<datapoint pos="2" key="202"/>
+					</sources>
+					<targets>
+						<datapoint pos="0" key="201"/>
+					</targets>
+					<view ltx="969" lty="776" rbx="1063" rby="847"/>
+					<data>
+						<comment>
+							<text>if resourceType does not exist,
+map &quot;Dataset&quot; to resourceTypeGeneral 
+because corpus consists of datasets only</text>
+						</comment>
 					</data>
 				</component>
 				<component name="contributors" library="core" uid="42" kind="3">
@@ -298,13 +277,35 @@ used for dividing geoLocationPoint and geoLocationBox coordinates</text>
 						<datapoint pos="0" key="181"/>
 						<datapoint/>
 					</targets>
-					<view ltx="654" lty="835" rbx="755" rby="888"/>
+					<view ltx="638" lty="376" rbx="739" rby="429"/>
+				</component>
+				<component name="nameIdentifier" library="core" uid="87" kind="3">
+					<sources>
+						<datapoint pos="0" key="213"/>
+						<datapoint pos="1" key="212"/>
+					</sources>
+					<targets>
+						<datapoint pos="0" key="214"/>
+						<datapoint/>
+					</targets>
+					<view ltx="638" lty="442" rbx="739" rby="495"/>
+				</component>
+				<component name="nameIdentifierScheme" library="core" uid="88" kind="3">
+					<sources>
+						<datapoint pos="0" key="218"/>
+						<datapoint pos="1" key="217"/>
+					</sources>
+					<targets>
+						<datapoint pos="0" key="216"/>
+						<datapoint/>
+					</targets>
+					<view ltx="638" lty="504" rbx="768" rby="557"/>
 				</component>
 				<component name="metadata" library="xml" uid="3" kind="14">
 					<properties XSLTTargetEncoding="UTF-8" XSLTDefaultOutput="1"/>
 					<view ltx="1327" lty="-1" rbx="1672" rby="2115"/>
 					<data>
-						<root scrollposition="670">
+						<root scrollposition="715">
 							<header>
 								<namespaces>
 									<namespace uid="http://datacite.org/schema/kernel-4"/>
@@ -331,7 +332,9 @@ used for dividing geoLocationPoint and geoLocationBox coordinates</text>
 										</entry>
 										<entry name="publisher" inpkey="14" expanded="1"/>
 										<entry name="publicationYear" inpkey="4"/>
-										<entry name="resourceType" inpkey="15" expanded="1"/>
+										<entry name="resourceType" inpkey="15" expanded="1">
+											<entry name="resourceTypeGeneral" ns="1" type="attribute" inpkey="184"/>
+										</entry>
 										<entry name="subjects" inpkey="16" expanded="1">
 											<entry name="subject" inpkey="17" expanded="1">
 												<entry name="subjectScheme" ns="1" type="attribute" inpkey="18"/>
@@ -410,7 +413,10 @@ used for dividing geoLocationPoint and geoLocationBox coordinates</text>
 										<entry name="fundingReferences" inpkey="183" expanded="1">
 											<entry name="fundingReference" inpkey="173" expanded="1">
 												<entry name="funderName" inpkey="174"/>
-												<entry name="funderIdentifier" expanded="1"/>
+												<entry name="funderIdentifier" inpkey="215" expanded="1">
+													<entry name="funderIdentifierType" ns="1" type="attribute" inpkey="224"/>
+													<entry name="schemeURI" ns="1" type="attribute" inpkey="225"/>
+												</entry>
 												<entry name="awardNumber" expanded="1"/>
 												<entry name="awardTitle" expanded="1"/>
 											</entry>
@@ -420,6 +426,176 @@ used for dividing geoLocationPoint and geoLocationBox coordinates</text>
 							</entry>
 						</root>
 						<document schema="meta\kernel-4.6\metadata.xsd" instanceroot="{http://datacite.org/schema/kernel-4}resource" inputinstance="meta\kernel-4.6\example\datacite-example-full-v4.xml" outputinstance="meta\kernel-4.6\example\datacite-example-full-v4.xml"/>
+					</data>
+				</component>
+				<component name="contributorName" library="core" uid="40" kind="3">
+					<sources>
+						<datapoint pos="0" key="166"/>
+						<datapoint pos="1" key="167"/>
+					</sources>
+					<targets>
+						<datapoint pos="0" key="168"/>
+						<datapoint pos="1" key="169"/>
+					</targets>
+					<view ltx="638" lty="217" rbx="744" rby="270"/>
+				</component>
+				<component name="contains" library="core" uid="38" kind="5">
+					<sources>
+						<datapoint pos="0" key="170"/>
+						<datapoint pos="1" key="171"/>
+					</sources>
+					<targets>
+						<datapoint pos="0" key="172"/>
+					</targets>
+					<view ltx="452" lty="399" rbx="540" rby="452"/>
+				</component>
+				<component name="constant" library="core" uid="39" kind="2">
+					<targets>
+						<datapoint pos="0" key="165"/>
+					</targets>
+					<view ltx="353" lty="435" rbx="426" rby="451"/>
+					<data>
+						<constant value="Funder" datatype="string"/>
+					</data>
+				</component>
+				<component name="schemeURI" library="core" uid="90" kind="3">
+					<sources>
+						<datapoint pos="0" key="221"/>
+						<datapoint pos="1" key="222"/>
+					</sources>
+					<targets>
+						<datapoint pos="0" key="223"/>
+						<datapoint/>
+					</targets>
+					<view ltx="643" lty="569" rbx="744" rby="622"/>
+				</component>
+				<component name="value-map" library="core" uid="89" kind="23">
+					<sources>
+						<datapoint pos="0" key="220"/>
+					</sources>
+					<targets>
+						<datapoint pos="0" key="226"/>
+					</targets>
+					<view ltx="819" lty="511" rbx="894" rby="548"/>
+					<data>
+						<valuemap enableDefaultValue="1">
+							<valuemapTable>
+								<entry from="Crossref Funder ID" to="Crossref Funder ID"/>
+								<entry from="GRID" to="GRID"/>
+								<entry from="ISNI" to="ISNI"/>
+								<entry from="ROR" to="ROR"/>
+							</valuemapTable>
+							<input name="input" type="string"/>
+							<result name="result" type="string" defaultValue="Other"/>
+						</valuemap>
+						<comment>
+							<text>mapping value of nameIdentifierScheme to contolled List for funderIdentifierType in 4.6
+i.e. ORCID is not in the controlled list, so it is mapped to &quot;Other&quot;</text>
+						</comment>
+					</data>
+				</component>
+				<component name="metadata" library="xml" uid="2" kind="14">
+					<properties XSLTTargetEncoding="UTF-8"/>
+					<view ltx="2" rbx="322" rby="2115"/>
+					<data>
+						<root>
+							<header>
+								<namespaces>
+									<namespace uid="http://datacite.org/schema/kernel-3"/>
+									<namespace/>
+									<namespace uid="http://www.w3.org/XML/1998/namespace"/>
+									<namespace uid="http://www.altova.com/mapforce"/>
+								</namespaces>
+							</header>
+							<entry name="FileInstance" ns="3" expanded="1">
+								<entry name="document" ns="3" expanded="1" casttotargettypemode="cast-in-subtree">
+									<entry name="resource" outkey="1" expanded="1">
+										<entry name="identifier" outkey="5" expanded="1"/>
+										<entry name="creators" outkey="60">
+											<entry name="creator" outkey="61" expanded="1">
+												<entry name="creatorName" outkey="62"/>
+												<entry name="nameIdentifier" outkey="63" expanded="1"/>
+												<entry name="affiliation" outkey="64" expanded="1"/>
+											</entry>
+										</entry>
+										<entry name="titles" outkey="65">
+											<entry name="title" outkey="66" expanded="1"/>
+										</entry>
+										<entry name="publisher" outkey="67"/>
+										<entry name="publicationYear" outkey="6"/>
+										<entry name="subjects" outkey="68" expanded="1">
+											<entry name="subject" outkey="69" expanded="1">
+												<entry name="subjectScheme" ns="1" type="attribute" outkey="70"/>
+												<entry name="schemeURI" ns="1" type="attribute" outkey="71"/>
+												<entry name="lang" ns="2" type="attribute" outkey="72"/>
+											</entry>
+										</entry>
+										<entry name="contributors" outkey="73" expanded="1">
+											<entry name="contributor" outkey="74" expanded="1">
+												<entry name="contributorType" ns="1" type="attribute" outkey="75"/>
+												<entry name="contributorName" outkey="76"/>
+												<entry name="nameIdentifier" outkey="77" expanded="1">
+													<entry name="nameIdentifierScheme" ns="1" type="attribute" outkey="219"/>
+													<entry name="schemeURI" ns="1" type="attribute" outkey="227"/>
+												</entry>
+												<entry name="affiliation" outkey="78" expanded="1"/>
+											</entry>
+										</entry>
+										<entry name="dates" outkey="79" expanded="1">
+											<entry name="date" outkey="80" expanded="1">
+												<entry name="dateType" ns="1" type="attribute" outkey="81"/>
+											</entry>
+										</entry>
+										<entry name="language" outkey="82"/>
+										<entry name="resourceType" outkey="83" expanded="1">
+											<entry name="resourceTypeGeneral" ns="1" type="attribute" outkey="196"/>
+										</entry>
+										<entry name="alternateIdentifiers" outkey="84" expanded="1">
+											<entry name="alternateIdentifier" outkey="85" expanded="1"/>
+										</entry>
+										<entry name="relatedIdentifiers" outkey="86" expanded="1">
+											<entry name="relatedIdentifier" outkey="87" expanded="1">
+												<entry name="relatedIdentifierType" ns="1" type="attribute" outkey="88"/>
+												<entry name="relationType" ns="1" type="attribute" outkey="89"/>
+												<entry name="relatedMetadataScheme" ns="1" type="attribute" outkey="90"/>
+												<entry name="schemeURI" ns="1" type="attribute" outkey="91"/>
+												<entry name="schemeType" ns="1" type="attribute" outkey="92"/>
+											</entry>
+										</entry>
+										<entry name="sizes" outkey="93" expanded="1">
+											<entry name="size" outkey="94"/>
+										</entry>
+										<entry name="formats" outkey="95" expanded="1">
+											<entry name="format" outkey="96"/>
+										</entry>
+										<entry name="version" outkey="97"/>
+										<entry name="rightsList" outkey="98" expanded="1">
+											<entry name="rights" outkey="99" expanded="1">
+												<entry name="rightsURI" ns="1" type="attribute" outkey="100"/>
+											</entry>
+										</entry>
+										<entry name="descriptions" outkey="101" expanded="1">
+											<entry name="description" outkey="102" expanded="1">
+												<entry name="descriptionType" ns="1" type="attribute" outkey="103"/>
+												<entry name="lang" ns="2" type="attribute" outkey="104"/>
+												<entry name="#text" ns="1" outkey="105"/>
+												<entry name="br" outkey="106"/>
+											</entry>
+										</entry>
+										<entry name="geoLocations" outkey="107" expanded="1">
+											<entry name="geoLocation" outkey="108" expanded="1">
+												<entry name="geoLocationPoint" outkey="109"/>
+												<entry name="geoLocationBox" outkey="110"/>
+												<entry name="geoLocationPlace" outkey="111" expanded="1">
+													<entry name="#text" ns="1" outkey="112"/>
+												</entry>
+											</entry>
+										</entry>
+									</entry>
+								</entry>
+							</entry>
+						</root>
+						<document schema="meta\kernel-3.1\metadata.xsd" instanceroot="{http://datacite.org/schema/kernel-3}resource" inputinstance="meta\kernel-3.1\example\datacite-example-full-v3.1.xml" outputinstance="meta\kernel-3.1\example\datacite-example-full-v3.1.xml"/>
 					</data>
 				</component>
 			</children>
@@ -436,11 +612,6 @@ used for dividing geoLocationPoint and geoLocationBox coordinates</text>
 						</data>
 					</edge>
 					<edge edgekey="13">
-						<data>
-							<dataconnection type="2"/>
-						</data>
-					</edge>
-					<edge edgekey="15">
 						<data>
 							<dataconnection type="2"/>
 						</data>
@@ -522,9 +693,9 @@ used for dividing geoLocationPoint and geoLocationBox coordinates</text>
 							<edge vertexkey="14"/>
 						</edges>
 					</vertex>
-					<vertex vertexkey="83">
+					<vertex vertexkey="194">
 						<edges>
-							<edge vertexkey="15" edgekey="15"/>
+							<edge vertexkey="15"/>
 						</edges>
 					</vertex>
 					<vertex vertexkey="68">
@@ -571,6 +742,7 @@ used for dividing geoLocationPoint and geoLocationBox coordinates</text>
 					<vertex vertexkey="77">
 						<edges>
 							<edge vertexkey="25" edgekey="25"/>
+							<edge vertexkey="213"/>
 						</edges>
 					</vertex>
 					<vertex vertexkey="78">
@@ -811,6 +983,9 @@ used for dividing geoLocationPoint and geoLocationBox coordinates</text>
 							<edge vertexkey="167"/>
 							<edge vertexkey="176"/>
 							<edge vertexkey="180"/>
+							<edge vertexkey="212"/>
+							<edge vertexkey="217"/>
+							<edge vertexkey="222"/>
 						</edges>
 					</vertex>
 					<vertex vertexkey="165">
@@ -841,6 +1016,92 @@ used for dividing geoLocationPoint and geoLocationBox coordinates</text>
 					<vertex vertexkey="181">
 						<edges>
 							<edge vertexkey="183"/>
+						</edges>
+					</vertex>
+					<vertex vertexkey="201">
+						<edges>
+							<edge vertexkey="184"/>
+						</edges>
+					</vertex>
+					<vertex vertexkey="211">
+						<edges>
+							<edge vertexkey="186"/>
+						</edges>
+					</vertex>
+					<vertex vertexkey="187">
+						<edges>
+							<edge vertexkey="188"/>
+						</edges>
+					</vertex>
+					<vertex vertexkey="185">
+						<edges>
+							<edge vertexkey="189"/>
+						</edges>
+					</vertex>
+					<vertex vertexkey="207">
+						<edges>
+							<edge vertexkey="191"/>
+						</edges>
+					</vertex>
+					<vertex vertexkey="83">
+						<edges>
+							<edge vertexkey="192"/>
+							<edge vertexkey="197"/>
+							<edge vertexkey="209"/>
+						</edges>
+					</vertex>
+					<vertex vertexkey="195">
+						<edges>
+							<edge vertexkey="193"/>
+							<edge vertexkey="202"/>
+							<edge vertexkey="210"/>
+						</edges>
+					</vertex>
+					<vertex vertexkey="196">
+						<edges>
+							<edge vertexkey="203"/>
+						</edges>
+					</vertex>
+					<vertex vertexkey="198">
+						<edges>
+							<edge vertexkey="204"/>
+							<edge vertexkey="206"/>
+							<edge vertexkey="208"/>
+						</edges>
+					</vertex>
+					<vertex vertexkey="190">
+						<edges>
+							<edge vertexkey="205"/>
+						</edges>
+					</vertex>
+					<vertex vertexkey="214">
+						<edges>
+							<edge vertexkey="215"/>
+						</edges>
+					</vertex>
+					<vertex vertexkey="219">
+						<edges>
+							<edge vertexkey="218"/>
+						</edges>
+					</vertex>
+					<vertex vertexkey="216">
+						<edges>
+							<edge vertexkey="220"/>
+						</edges>
+					</vertex>
+					<vertex vertexkey="227">
+						<edges>
+							<edge vertexkey="221"/>
+						</edges>
+					</vertex>
+					<vertex vertexkey="226">
+						<edges>
+							<edge vertexkey="224"/>
+						</edges>
+					</vertex>
+					<vertex vertexkey="223">
+						<edges>
+							<edge vertexkey="225"/>
 						</edges>
 					</vertex>
 				</vertices>

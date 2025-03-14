@@ -13,10 +13,10 @@
 | creators |  | creators |  |  |
 | creators>creator | M | creators>creator | M |  |
 | creators>creator>creatorName | M | creators>creator>creatorName | M | The personal name format should<br>be: family, given.  |
-| / |  | creators>creator>creatorName=nameType |  | not mandatory. need examples, to see if it is possible to set nameType rule-based  |
-| / |  | creators>creator>creatorName=xml:lang |  | might always be en? need examples |
-|  |  | creators>creator>givenName |  | not mandatory, but could be filled with second part of creatorName |
-|  |  | creators>creator>familyName |  | not mandatory, but could be filled with first part of creatorName |
+| / |  | creators>creator>creatorName=nameType |  | cannot be mapped, because information is not given in 3.1  |
+| / |  | creators>creator>creatorName=xml:lang |  | cannot be mapped, because information is not given in 3.1 |
+|  |  | creators>creator>givenName |  | not mandatory, but could be filled with second part of contributorName. But only for contributor Persons. Since it is not possible, to determine weather nam belongs to a person or organisation in 3.1, this will not be mapped. |
+|  |  | creators>creator>familyName |  | not mandatory, but could be filled with second part of contributorName. But only for contributor Persons. Since it is not possible, to determine weather nam belongs to a person or organisation in 3.1, this will not be mapped. |
 | creators>creator>nameIdentifier |  | creators>creator>nameIdentifier |  |  |
 | creators>creator>nameIdentifier=nameIdentiferScheme | mandatory, if nameIdentifier is given | creators>creator>nameIdentifier=nameIdentiferScheme |  | mandatory, if nameIdentifier is specified |
 | creators>creator>nameIdentifier=schemeURI |  | creators>creator>nameIdentifier=schemeURI |  |  |
@@ -45,10 +45,10 @@
 | contributors>contributor | R | contributors>contributor | R |  |
 | contributors>contributor=contributorType | If Contributor is used, then contributorType is mandatory. | contributors>contributor=contributorType | If Contributor is used, then contributorType is mandatory. |  |
 | contributors>contributor>contributorName | If Contributor is used, then contributorName is mandatory. | contributors>contributor>contributorName | If Contributor is used, then contributorName is mandatory. |  |
-|  |  | contributors>contributor>contributorName=nameType |  | need examples, to see if it is possible to set nameType rule-based  |
-|  |  | contributors>contributor>contributorName=xml:lang |  | might always be en? need examples |
-|  |  | contributors>contributor>givenName |  | not mandatory, but could be filled with second part of contributorName |
-|  |  | contributors>contributor>familyName |  | not mandatory, but could be filled with first part of contributorName |
+|  |  | contributors>contributor>contributorName=nameType |  | cannot be mapped, because information is not given in 3.1 |
+|  |  | contributors>contributor>contributorName=xml:lang |  | cannot be mapped, because information is not given in 3.1 |
+|  |  | contributors>contributor>givenName |  | not mandatory, but could be filled with second part of contributorName. But only for contributor Persons. Since it is not possible, to determine weather nam belongs to a person or organisation in 3.1, this will not be mapped. |
+|  |  | contributors>contributor>familyName |  | not mandatory, but could be filled with second part of contributorName. But only for contributor Persons. Since it is not possible, to determine weather nam belongs to a person or organisation in 3.1, this will not be mapped. |
 | contributors>contributor>nameIdentifier |  | contributors>contributor>nameIdentifier |  |  |
 | contributors>contributor>nameIdentifier=nameIdentifierScheme | If nameIdentifier is used, nameIdentifierScheme is mandatory. | contributors>contributor>nameIdentifier=nameIdentifierScheme | If nameIdentifier is used, nameIdentifierScheme is mandatory. |  |
 | contributors>contributor>nameIdentifier=schemeURI |  | contributors>contributor>nameIdentifier=schemeURI |  |  |
@@ -61,8 +61,8 @@
 | dates>date=dateType | If Date is used, dateType is mandatory. | dates>date=dateType | If Date is used, dateType is mandatory. |  |
 | / |  | dates>date=dateInformation |  | cannot be mapped, because information is not given in 3.1 |
 | language | O | language | O |  |
-| resourceType | R | resourceType | M | became mandatory with version 4.0 ->need to see examples |
-| resourceType=resourceTypeGeneral | If ResourceType is used,<br>resourceTypeGeneral is<br>mandatory. | resourceType=resourceTypeGeneral | M | occurence 1 (mandatory) since scheme version 4.0 ->need to see examples to map |
+| resourceType | R | resourceType | M | became mandatory with version 4.0. will be filled with "Dataset" if resourceType not given in 3.1 |
+| resourceType=resourceTypeGeneral | If ResourceType is used,<br>resourceTypeGeneral is<br>mandatory. | resourceType=resourceTypeGeneral | M | occurence 1 (mandatory) since scheme version 4.0,will be set to "Dataset", if not given in 3.1 |
 | alternateIdentifiers | O | alternateIdentifiers | O |  |
 | alternateIdentifiers>alternateIdentifier | O | alternateIdentifiers>alternateIdentifier | O |  |
 | alternateIdentifiers>alternateIdentifier=alternateIdentifierType | If AlternateIdentifier is used,<br>alternateIdentifierType is<br>mandatory | alternateIdentifiers>alternateIdentifier=alternateIdentifierType | If alternateIdentifier is used, alternateIdentifierType is mandatory. |  |
@@ -113,7 +113,7 @@
 |  |  | fundingReferences>fundingReference | O |  |
 | contributorName IF contributorType="Funder" |  | fundingReferences>fundingReference>funderName | If FundingReference is used, then funderName is mandatory. | Contributor with contributorType "Funder" |
 | contributors>contributor>nameIdentifier IF  contributorType="Funder" |  | fundingReferences>fundingReference>funderIdentifier |  | contributor>nameIdentifier IF Type ist Funder |
-| contributors>contributor>nameIdentifier=nameIdentifierType IF contributorType="Funder" |  | fundingReferences>fundingReference>funderIdentifier=funderIdentifierType | If funderIdentifier is used, funderIdentifierType is mandatory. | contributor>nameIdentifierType IF Type ist Funder |
+| contributors>contributor>nameIdentifier=nameIdentifierType IF contributorType="Funder" |  | fundingReferences>fundingReference>funderIdentifier=funderIdentifierType | If funderIdentifier is used, funderIdentifierType is mandatory. | for contributor with tpye "Funder, mapping value of nameIdentifierScheme to contolled List for funderIdentifierType in 4.6; i.e. ORCID is not in the controlled list, so it is mapped to "Other" |
 | contributors>contributor>nameIdentifier=schemeURI IF contributorType="Funder" |  | fundingReferences>fundingReference>funderIdentifier=schemeURI |  |  IF Type is Funder |
 | / |  | fundingReferences>fundingReference>awardNumber |  | cannot be mapped, because information is not given in 3.1 |
 | / |  | fundingReferences>fundingReference>awardNumber=awardURI |  | cannot be mapped, because information is not given in 3.1 |
