@@ -3,6 +3,7 @@ const fs = require('fs-extra');
 const SaxonJS = require('saxon-js');
 const { exec } = require('child_process');
 const util = require('util');
+const axios = require('axios');
 const execPromise = util.promisify(exec);
 
 class XmlTransformer {
@@ -128,8 +129,8 @@ class XmlTransformer {
                 'xsi:schemaLocation="http://datacite.org/schema/kernel-4 https://schema.datacite.org/meta/kernel-4/metadata.xsd"'
             );
 
-            // Nachträgliche Anreicherung: Rights-Element nach Language-Element einfügen
-            transformedContent = this.enrichXmlContent(transformedContent);
+            // Nachträgliche Anreicherung mit Rights und ROR-IDs
+            transformedContent = await this.enrichXmlContent(transformedContent);
 
             await fs.writeFile(outputFile, transformedContent);
             console.log('Transformation erfolgreich:', outputFile);
@@ -142,21 +143,143 @@ class XmlTransformer {
     }
 
     // Methode zur Anreicherung des XML-Inhalts
-    enrichXmlContent(xmlContent) {
+    async enrichXmlContent(xmlContent) {
         // Rights-Element nach Language-Element einfügen
         const rightsElement = '<rights rightsURI="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</rights>';
 
         // Prüfen, ob bereits ein rights-Element existiert
         if (xmlContent.includes('<rights')) {
             console.log('Rights-Element bereits vorhanden, keine Ergänzung nötig');
-            return xmlContent;
+        } else {
+            // Einfügen nach dem Language-Element
+            xmlContent = xmlContent.replace(
+                /(<language>[^<]*<\/language>)/,
+                '$1\n   ' + rightsElement
+            );
         }
 
-        // Einfügen nach dem Language-Element
-        return xmlContent.replace(
-            /(<language>[^<]*<\/language>)/,
-            '$1\n   ' + rightsElement
-        );
+        // Affiliationen mit ROR-IDs anreichern
+        xmlContent = await this.enrichAffiliations(xmlContent);
+
+        return xmlContent;
+    }
+
+    // Methode zur Anreicherung von Affiliationen mit ROR-IDs
+    async enrichAffiliations(xmlContent) {
+        const affiliationRegex = /<affiliation(?!\s+affiliationIdentifier)([^>]*)>(.*?)<\/affiliation>/g;
+
+        // Alle Affiliationen ohne ROR-ID finden
+        const affiliationsToProcess = [];
+        let match;
+
+        // Alle zu verarbeitenden Affiliationen sammeln
+        while ((match = affiliationRegex.exec(xmlContent)) !== null) {
+            affiliationsToProcess.push({
+                fullMatch: match[0],
+                attributes: match[1],
+                name: match[2].trim()
+            });
+        }
+
+        console.log(`${affiliationsToProcess.length} Affiliationen ohne ROR-ID gefunden`);
+
+        // Für jede Affiliation die ROR-ID suchen und ersetzen
+        for (const affiliation of affiliationsToProcess) {
+            try {
+                const rorId = await this.findRorId(affiliation.name);
+
+                if (rorId) {
+                    console.log(`ROR-ID für "${affiliation.name}" gefunden: ${rorId}`);
+
+                    // Neues Affiliation-Element mit ROR-ID erstellen
+                    const newAffiliation = `<affiliation${affiliation.attributes} affiliationIdentifierScheme="ROR" schemeURI="https://ror.org/" affiliationIdentifier="https://ror.org/${rorId}">${affiliation.name}</affiliation>`;
+
+                    // Im XML-Inhalt ersetzen
+                    xmlContent = xmlContent.replace(affiliation.fullMatch, newAffiliation);
+                } else {
+                    console.log(`Keine ROR-ID für "${affiliation.name}" gefunden`);
+                }
+            } catch (error) {
+                console.error(`Fehler bei der ROR-Abfrage für "${affiliation.name}":`, error);
+            }
+        }
+
+        return xmlContent;
+    }
+
+    // Methode zum Abfragen der ROR-API und Finden der passendsten ROR-ID
+    async findRorId(affiliationName) {
+        try {
+            // URL-Kodierung des Namens für die API-Anfrage
+            const encodedName = encodeURIComponent(affiliationName);
+            const apiUrl = `https://api.ror.org/organizations?query=${encodedName}`;
+
+            console.log(`ROR-API Anfrage: ${apiUrl}`);
+
+            const response = await axios.get(apiUrl);
+            const data = response.data;
+
+            // Prüfe, ob die Antwort die erwartete Struktur hat
+            console.log(`${data.number_of_results} Ergebnisse gefunden`);
+
+            // Wenn keine Ergebnisse gefunden wurden
+            if (!data.items || data.items.length === 0) {
+                console.log("Keine Items in der Antwort gefunden");
+                return null;
+            }
+
+            // Das erste (beste) Ergebnis nehmen
+            const bestMatch = data.items[0];
+            console.log(`Bester Treffer: ${bestMatch.name} (ID: ${bestMatch.id})`);
+
+            // Prüfen, ob der Name der Organisation hinreichend ähnlich ist
+            // Hier eine einfache Übereinstimmungsbewertung
+            const nameMatch = this.calculateSimilarity(affiliationName.toLowerCase(), bestMatch.name.toLowerCase());
+            console.log(`Namensähnlichkeit: ${nameMatch}`);
+
+            // Schwellenwert für die Namensähnlichkeit
+            if (nameMatch < 0.6) {
+                console.log(`Ähnlichkeit zu niedrig (${nameMatch}) für "${affiliationName}" mit "${bestMatch.name}"`);
+
+                // Versuche, in den Aliases zu suchen
+                const aliasMatch = bestMatch.aliases.some(alias =>
+                    this.calculateSimilarity(affiliationName.toLowerCase(), alias.toLowerCase()) >= 0.75
+                );
+
+                if (!aliasMatch) {
+                    return null;
+                }
+            }
+
+            // ROR-ID aus der vollständigen URL extrahieren
+            const rorId = bestMatch.id.replace('https://ror.org/', '');
+
+            console.log(`Beste Übereinstimmung für "${affiliationName}": "${bestMatch.name}" (ID: ${rorId})`);
+
+            return rorId;
+        } catch (error) {
+            console.error('Fehler bei der ROR-API Anfrage:', error);
+            return null;
+        }
+    }
+
+    // Hilfsmethode zur Berechnung der Ähnlichkeit zwischen zwei Strings
+    calculateSimilarity(s1, s2) {
+        // Einfache Ähnlichkeitsberechnung: Levenshtein-Distanz
+        // Hier vereinfacht mit einer Funktion zur Berechnung der Überlappung von Wörtern
+
+        const words1 = s1.split(/\s+/);
+        const words2 = s2.split(/\s+/);
+
+        let commonWords = 0;
+        for (const word of words1) {
+            if (word.length > 2 && words2.some(w => w.includes(word) || word.includes(w))) {
+                commonWords++;
+            }
+        }
+
+        // Normalisieren auf einen Wert zwischen 0 und 1
+        return commonWords / Math.max(words1.length, words2.length);
     }
 
     // Haupttransformationsmethode
