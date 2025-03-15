@@ -128,6 +128,9 @@ class XmlTransformer {
                 'xsi:schemaLocation="http://datacite.org/schema/kernel-4 https://schema.datacite.org/meta/kernel-4/metadata.xsd"'
             );
 
+            // Nachträgliche Anreicherung: Rights-Element nach Language-Element einfügen
+            transformedContent = this.enrichXmlContent(transformedContent);
+
             await fs.writeFile(outputFile, transformedContent);
             console.log('Transformation erfolgreich:', outputFile);
 
@@ -136,6 +139,24 @@ class XmlTransformer {
             console.error('Fehler bei der Transformation:', error);
             throw error;
         }
+    }
+
+    // Methode zur Anreicherung des XML-Inhalts
+    enrichXmlContent(xmlContent) {
+        // Rights-Element nach Language-Element einfügen
+        const rightsElement = '<rights rightsURI="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</rights>';
+
+        // Prüfen, ob bereits ein rights-Element existiert
+        if (xmlContent.includes('<rights')) {
+            console.log('Rights-Element bereits vorhanden, keine Ergänzung nötig');
+            return xmlContent;
+        }
+
+        // Einfügen nach dem Language-Element
+        return xmlContent.replace(
+            /(<language>[^<]*<\/language>)/,
+            '$1\n   ' + rightsElement
+        );
     }
 
     // Haupttransformationsmethode
