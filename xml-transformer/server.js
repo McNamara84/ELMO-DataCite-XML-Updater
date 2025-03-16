@@ -41,7 +41,16 @@ app.post('/transform', upload.array('xmlFiles'), async (req, res) => {
             throw new Error('Keine Dateien zum Transformieren empfangen');
         }
 
-        const results = await transformer.transformFiles(files);
+        // Optionen auslesen
+        const options = {
+            addRights: req.body.addRights === 'true',
+            enrichRor: req.body.enrichRor === 'true',
+            similarityThreshold: parseFloat(req.body.similarityThreshold || 0.6)
+        };
+
+        console.log('Anreicherungsoptionen:', options);
+
+        const results = await transformer.transformFiles(files, options);
 
         res.json({
             message: 'Transformation abgeschlossen',

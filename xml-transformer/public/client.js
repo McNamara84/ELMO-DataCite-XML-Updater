@@ -11,6 +11,11 @@ document.getElementById('uploadForm').addEventListener('submit', async (e) => {
     }
     formData.append('version', version);
 
+    // Anreicherungsoptionen hinzufügen
+    formData.append('addRights', document.getElementById('addRights').checked);
+    formData.append('enrichRor', document.getElementById('enrichRor').checked);
+    formData.append('similarityThreshold', document.getElementById('similarityThreshold').value);
+
     // Status-Container leeren und Lade-Anzeige hinzufügen
     const statusDiv = document.getElementById('status');
     statusDiv.innerHTML = `

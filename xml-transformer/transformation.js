@@ -107,12 +107,13 @@ class XmlTransformer {
     }
 
     // XSLT-Transformation durchführen
-    async transformXML(inputFile, outputFile, sefPath) {
+    async transformXML(inputFile, outputFile, sefPath, options) {
         try {
             console.log('Starte Transformation...');
             console.log('Input:', inputFile);
             console.log('Output:', outputFile);
             console.log('SEF:', sefPath);
+            console.log('Optionen:', options);
 
             const xmlContent = await fs.readFile(inputFile, 'utf8');
             console.log('XML eingelesen, Länge:', xmlContent.length);
@@ -130,7 +131,7 @@ class XmlTransformer {
             );
 
             // Nachträgliche Anreicherung mit Rights und ROR-IDs
-            transformedContent = await this.enrichXmlContent(transformedContent);
+            transformedContent = await this.enrichXmlContent(transformedContent, options);
 
             await fs.writeFile(outputFile, transformedContent);
             console.log('Transformation erfolgreich:', outputFile);
@@ -142,24 +143,37 @@ class XmlTransformer {
         }
     }
 
-    // Methode zur Anreicherung des XML-Inhalts
-    async enrichXmlContent(xmlContent) {
-        // Rights-Element nach Language-Element einfügen
-        const rightsElement = '<rights rightsURI="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</rights>';
 
-        // Prüfen, ob bereits ein rights-Element existiert
-        if (xmlContent.includes('<rights')) {
-            console.log('Rights-Element bereits vorhanden, keine Ergänzung nötig');
-        } else {
-            // Einfügen nach dem Language-Element
-            xmlContent = xmlContent.replace(
-                /(<language>[^<]*<\/language>)/,
-                '$1\n   ' + rightsElement
-            );
+    // Methode zur Anreicherung des XML-Inhalts
+    async enrichXmlContent(xmlContent, options) {
+        // Rights-Element nach Language-Element einfügen, wenn Option aktiviert
+        if (options.addRights) {
+            const rightsElement = '<rights rightsURI="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</rights>';
+
+            // Prüfen, ob bereits ein rights-Element existiert
+            if (xmlContent.includes('<rights')) {
+                console.log('Rights-Element bereits vorhanden, wird ersetzt');
+                // Ersetze vorhandenes Rights-Element
+                xmlContent = xmlContent.replace(
+                    /<rights[^>]*>.*?<\/rights>/,
+                    rightsElement
+                );
+            } else {
+                // Einfügen nach dem Language-Element
+                xmlContent = xmlContent.replace(
+                    /(<language>[^<]*<\/language>)/,
+                    '$1\n   ' + rightsElement
+                );
+                console.log('Rights-Element hinzugefügt');
+            }
         }
 
-        // Affiliationen mit ROR-IDs anreichern
-        xmlContent = await this.enrichAffiliations(xmlContent);
+        // Affiliationen mit ROR-IDs anreichern, wenn Option aktiviert
+        if (options.enrichRor) {
+            console.log('Anreicherung mit ROR-IDs (Schwellenwert:', options.similarityThreshold, ')');
+            this.similarityThreshold = options.similarityThreshold;
+            xmlContent = await this.enrichAffiliations(xmlContent);
+        }
 
         return xmlContent;
     }
@@ -238,12 +252,12 @@ class XmlTransformer {
             console.log(`Namensähnlichkeit: ${nameMatch}`);
 
             // Schwellenwert für die Namensähnlichkeit
-            if (nameMatch < 0.6) {
+            if (nameMatch < this.similarityThreshold) {
                 console.log(`Ähnlichkeit zu niedrig (${nameMatch}) für "${affiliationName}" mit "${bestMatch.name}"`);
 
                 // Versuche, in den Aliases zu suchen
                 const aliasMatch = bestMatch.aliases.some(alias =>
-                    this.calculateSimilarity(affiliationName.toLowerCase(), alias.toLowerCase()) >= 0.75
+                    this.calculateSimilarity(normalizedName, alias.toLowerCase()) >= this.similarityThreshold
                 );
 
                 if (!aliasMatch) {
@@ -283,12 +297,24 @@ class XmlTransformer {
     }
 
     // Haupttransformationsmethode
-    async transformFiles(files) {
+    async transformFiles(files, options = {}) {
         try {
             const xsltPath = await this.findXsltFile();
             console.log('Verwende XSLT-Datei:', xsltPath);
 
             const sefPath = await this.compileToSEF(xsltPath);
+
+            // Standardoptionen setzen
+            const transformOptions = {
+                addRights: options.addRights !== false, // Standard: true
+                enrichRor: options.enrichRor !== false, // Standard: true
+                similarityThreshold: options.similarityThreshold || 0.6 // Standard: 0.6
+            };
+
+            console.log('Verwendete Transformationsoptionen:', transformOptions);
+
+            // Schwellenwert für Ähnlichkeit setzen
+            this.similarityThreshold = transformOptions.similarityThreshold;
 
             const transformationResults = await Promise.all(
                 files.map(async (file) => {
@@ -296,7 +322,7 @@ class XmlTransformer {
                         const outputFileName = `transformed-${file.originalname}`;
                         const outputFile = path.join(this.directories.transform, outputFileName);
 
-                        await this.transformXML(file.path, outputFile, sefPath);
+                        await this.transformXML(file.path, outputFile, sefPath, transformOptions);
 
                         return {
                             originalName: file.originalname,
