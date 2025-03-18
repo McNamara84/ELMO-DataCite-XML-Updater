@@ -175,7 +175,42 @@ class XmlTransformer {
             xmlContent = await this.enrichAffiliations(xmlContent);
         }
 
+        // Spezifische GFZ-Affiliation ersetzen (immer ausführen)
+        xmlContent = this.replaceSpecificAffiliations(xmlContent);
+
         return xmlContent;
+    }
+
+    // Methode zur Ersetzung spezifischer Affiliationen
+    replaceSpecificAffiliations(xmlContent) {
+        const specificReplacements = [
+            {
+                pattern: /<affiliation>Deutsches GeoForschungsZentrum, Potsdam, Germany<\/affiliation>/g,
+                replacement: '<affiliation affiliationIdentifierScheme="ROR" schemeURI="https://ror.org/" affiliationIdentifier="https://ror.org/04z8jg394">Helmholtz Centre Potsdam - GFZ German Research Centre for Geosciences</affiliation>'
+            }
+        ];
+
+        let modifiedContent = xmlContent;
+        let replacementCount = 0;
+
+        for (const replacement of specificReplacements) {
+            const originalContent = modifiedContent;
+            modifiedContent = modifiedContent.replace(replacement.pattern, replacement.replacement);
+
+            // Zählen, wie viele Ersetzungen vorgenommen wurden
+            const matchCount = (originalContent.match(replacement.pattern) || []).length;
+            replacementCount += matchCount;
+
+            if (matchCount > 0) {
+                console.log(`${matchCount} spezifische Affiliation(s) ersetzt`);
+            }
+        }
+
+        if (replacementCount === 0) {
+            console.log('Keine spezifischen Affiliationen gefunden');
+        }
+
+        return modifiedContent;
     }
 
     // Methode zur Anreicherung von Affiliationen mit ROR-IDs
@@ -248,7 +283,8 @@ class XmlTransformer {
 
             // Prüfen, ob der Name der Organisation hinreichend ähnlich ist
             // Hier eine einfache Übereinstimmungsbewertung
-            const nameMatch = this.calculateSimilarity(affiliationName.toLowerCase(), bestMatch.name.toLowerCase());
+            const normalizedName = affiliationName.toLowerCase();
+            const nameMatch = this.calculateSimilarity(normalizedName, bestMatch.name.toLowerCase());
             console.log(`Namensähnlichkeit: ${nameMatch}`);
 
             // Schwellenwert für die Namensähnlichkeit
