@@ -1,0 +1,14 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: "Ehrmann"
+    given-names: "Holger"
+    orcid: "https://orcid.org/0009-0000-1235-6950"
+  - family-names: "Franz"
+    given-names: "Jana"
+    orcid: "https://orcid.org/0009-0003-7219-9514"
+title: "ELMO DataCite XML Updater"
+version: 1.0.0
+#doi: 10.5880/GFZ.XXXXXX
+date-released: 2025-04-04
+url: "https://github.com/McNamara84/ELMO-DataCite-XML-Updater"
