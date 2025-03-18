@@ -4,7 +4,15 @@
 1. Change directory: `cd xml-transformer`
 2. Start testserver: `node server.js`
 3. Visit `http://localhost:3000/` for testing
+
+## Main Features
+- Data transformation for XML files from schema version 3.x to version 4.6
+- Optional overwriting of rights according to obsolete scheme
+- Optional enrichment of the data set with ROR IDs
+
 ## Concordance Table
+<details>
+<summary>Show Table</summary>
 | **Datacite 3.1** | **Obligation 3.1** | **DataCite 4.6** | **Obligation 4.6** | **note** |
 |---|---|---|---|---|
 | resource |  | resource |  | Root |
@@ -140,3 +148,4 @@
 | / |  | relatedItems>relatedItem>edition |  | cannot be mapped, because information is not given in 3.1 |
 | / |  | … |  | cannot be mapped, because information is not given in 3.1 |
 | / |  | relatedItems>relatedItem>contributors |  | cannot be mapped, because information is not given in 3.1 |
+</details>
