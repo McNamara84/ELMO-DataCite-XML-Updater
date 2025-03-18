@@ -148,7 +148,7 @@ class XmlTransformer {
     async enrichXmlContent(xmlContent, options) {
         // Rights-Element nach Language-Element einfügen, wenn Option aktiviert
         if (options.addRights) {
-            const rightsElement = '<rights rightsURI="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</rights>';
+            const rightsElement = '<rights rightsURI="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</rights>';
 
             // Prüfen, ob bereits ein rights-Element existiert
             if (xmlContent.includes('<rights')) {
