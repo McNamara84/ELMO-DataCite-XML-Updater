@@ -184,6 +184,10 @@ class XmlTransformer {
             {
                 pattern: /<affiliation>Deutsches GeoForschungsZentrum, Potsdam, Germany<\/affiliation>/g,
                 replacement: '<affiliation affiliationIdentifierScheme="ROR" schemeURI="https://ror.org/" affiliationIdentifier="https://ror.org/04z8jg394">Helmholtz Centre Potsdam - GFZ German Research Centre for Geosciences</affiliation>'
+            },
+            {
+                pattern: /<affiliation>Institut für Gewässerökologie und Binnenfischerei, , <\/affiliation>/g,
+                replacement: '<affiliation affiliationIdentifierScheme="ROR" schemeURI="https://ror.org/" affiliationIdentifier="https://ror.org/01nftxb06">Institut für Gewässerökologie und Binnenfischerei</affiliation>'
             }
         ];
 
