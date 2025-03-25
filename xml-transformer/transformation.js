@@ -148,23 +148,20 @@ class XmlTransformer {
     async enrichXmlContent(xmlContent, options) {
         // Rights-Element nach Language-Element einfügen, wenn Option aktiviert
         if (options.addRights) {
-            const rightsElement = '<rights rightsURI="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</rights>';
+            const rightsElement = ` <rightsList>
+     <rights rightsURI="https://creativecommons.org/licenses/by/4.0/legalcode" rightsIdentifier="CC-BY-4.0" rightsIdentifierScheme="SPDX" schemeURI="https://spdx.org/licenses/" xml:lang="en">Creative Commons Attribution 4.0 International</rights>
+   </rightsList>`;
 
-            // Prüfen, ob bereits ein rights-Element existiert
-            if (xmlContent.includes('<rights')) {
-                console.log('Rights-Element bereits vorhanden, wird ersetzt');
-                // Ersetze vorhandenes Rights-Element
-                xmlContent = xmlContent.replace(
-                    /<rights[^>]*>.*?<\/rights>/,
-                    rightsElement
-                );
+            // Prüfen, ob bereits ein rights-ähnliches Element existiert und es ersetzen
+            if (xmlContent.includes('<rights') || xmlContent.includes('<rightsList>')) {
+                console.log('Rights-Element oder RightsList gefunden und bleibt erhalten');
             } else {
-                // Einfügen nach dem Language-Element
+                // Einfügen nach dem Language-Element mit korrekter Einrückung
                 xmlContent = xmlContent.replace(
-                    /(<language>[^<]*<\/language>)/,
-                    '$1\n   ' + rightsElement
+                    /([^<]*<\/language>)/,
+                    `$1\n  ${rightsElement}`
                 );
-                console.log('Rights-Element hinzugefügt');
+                console.log('RightsList-Element hinzugefügt');
             }
         }
 
