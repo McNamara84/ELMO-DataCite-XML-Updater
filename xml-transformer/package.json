@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "workspaces": ["xml-transformer"],
+  "workspaces": [
+    "xml-transformer"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "cd xml-transformer && node server.js"
@@ -16,8 +18,10 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "axios": "^1.8.3",
     "express": "^4.21.2",
     "fs-extra": "^11.3.0",
+    "node-fetch": "^3.3.2",
     "multer": "^2.0.1",
     "path": "^0.12.7",
     "saxon-js": "^2.7.0",

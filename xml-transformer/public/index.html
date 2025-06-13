@@ -34,6 +34,69 @@
                                 </select>
                             </div>
 
+                            <!-- Erweiterter Bereich: Anreicherungsoptionen -->
+                            <div class="mb-4">
+                                <div class="card">
+                                    <div class="card-header bg-light" data-bs-toggle="collapse"
+                                        data-bs-target="#enrichmentOptions" aria-expanded="false"
+                                        aria-controls="enrichmentOptions" role="button">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span>Erweiterte Anreicherungsoptionen</span>
+                                            <i class="bi bi-chevron-down"></i>
+                                        </div>
+                                    </div>
+                                    <div class="collapse" id="enrichmentOptions">
+                                        <div class="card-body">
+                                            <div class="mb-3">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" role="switch"
+                                                        id="addRights" name="addRights" checked>
+                                                    <label class="form-check-label" for="addRights">
+                                                        Rights überschreiben nach veraltetem Schema
+                                                    </label>
+                                                    <div class="form-text">
+                                                        Fügt das Element &lt;rights&gt; hinzu oder ersetzt es, wenn es
+                                                        bereits vorhanden ist.
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-3 border-top pt-3">
+                                                <div class="form-check form-switch mb-2">
+                                                    <input class="form-check-input" type="checkbox" role="switch"
+                                                        id="enrichRor" name="enrichRor" checked>
+                                                    <label class="form-check-label" for="enrichRor">
+                                                        Affiliations mit ROR-IDs anreichern
+                                                    </label>
+                                                    <div class="form-text">
+                                                        Sucht ROR-IDs für Affiliations und fügt sie als Attribute hinzu.
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mt-2" id="rorOptions">
+                                                    <div class="col-md-6">
+                                                        <label for="similarityThreshold" class="form-label">
+                                                            Ähnlichkeitsfaktor (0-1)
+                                                        </label>
+                                                        <div class="input-group">
+                                                            <input type="range" class="form-range" min="0.1" max="0.9"
+                                                                step="0.1" id="similarityThreshold"
+                                                                name="similarityThreshold" value="0.6">
+                                                            <span class="input-group-text"
+                                                                id="thresholdValue">0.6</span>
+                                                        </div>
+                                                        <div class="form-text">
+                                                            Höherer Wert bedeutet strengere Übereinstimmung
+                                                            erforderlich.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="d-grid gap-2">
                                 <button type="submit" class="btn btn-primary">
                                     Transformation starten
@@ -54,7 +117,27 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"
         integrity="sha512-7Pi/otdlbbCR+LnW+F7PwFcSDJOuUJB3OxtEHbg4vSMvzvJjde4Po1v4BR9Gdc9aXNUNFVUY+SK51wWT8WF0Gg=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="client.js"></script>
+
+    <!-- JavaScript für den Slider und Umschaltung der ROR-Optionen -->
+    <script>
+        // Aktualisiere den angezeigten Wert des Sliders
+        document.getElementById('similarityThreshold').addEventListener('input', function () {
+            document.getElementById('thresholdValue').textContent = this.value;
+        });
+
+        // Aktiviere/Deaktiviere ROR-Optionen basierend auf Checkbox-Status
+        document.getElementById('enrichRor').addEventListener('change', function () {
+            const rorOptions = document.getElementById('rorOptions');
+            rorOptions.style.opacity = this.checked ? '1' : '0.5';
+            const inputs = rorOptions.querySelectorAll('input');
+            inputs.forEach(input => {
+                input.disabled = !this.checked;
+            });
+        });
+    </script>
 </body>
 
 </html>

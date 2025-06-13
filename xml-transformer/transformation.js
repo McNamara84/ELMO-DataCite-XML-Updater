@@ -3,6 +3,7 @@ const fs = require('fs-extra');
 const SaxonJS = require('saxon-js');
 const { exec } = require('child_process');
 const util = require('util');
+const axios = require('axios');
 const execPromise = util.promisify(exec);
 
 class XmlTransformer {
@@ -106,12 +107,13 @@ class XmlTransformer {
     }
 
     // XSLT-Transformation durchführen
-    async transformXML(inputFile, outputFile, sefPath) {
+    async transformXML(inputFile, outputFile, sefPath, options) {
         try {
             console.log('Starte Transformation...');
             console.log('Input:', inputFile);
             console.log('Output:', outputFile);
             console.log('SEF:', sefPath);
+            console.log('Optionen:', options);
 
             const xmlContent = await fs.readFile(inputFile, 'utf8');
             console.log('XML eingelesen, Länge:', xmlContent.length);
@@ -128,6 +130,9 @@ class XmlTransformer {
                 'xsi:schemaLocation="http://datacite.org/schema/kernel-4 https://schema.datacite.org/meta/kernel-4/metadata.xsd"'
             );
 
+            // Nachträgliche Anreicherung mit Rights und ROR-IDs
+            transformedContent = await this.enrichXmlContent(transformedContent, options);
+
             await fs.writeFile(outputFile, transformedContent);
             console.log('Transformation erfolgreich:', outputFile);
 
@@ -138,13 +143,215 @@ class XmlTransformer {
         }
     }
 
+
+    // Methode zur Anreicherung des XML-Inhalts
+    async enrichXmlContent(xmlContent, options) {
+        // Rights-Element nach Language-Element einfügen, wenn Option aktiviert
+        if (options.addRights) {
+            const rightsElement = ` <rightsList>
+     <rights rightsURI="https://creativecommons.org/licenses/by/4.0/legalcode" rightsIdentifier="CC-BY-4.0" rightsIdentifierScheme="SPDX" schemeURI="https://spdx.org/licenses/" xml:lang="en">Creative Commons Attribution 4.0 International</rights>
+   </rightsList>`;
+
+            // Prüfen, ob bereits ein rights-ähnliches Element existiert und es ersetzen
+            if (xmlContent.includes('<rights') || xmlContent.includes('<rightsList>')) {
+                console.log('Rights-Element oder RightsList gefunden und bleibt erhalten');
+            } else {
+                // Einfügen nach dem Language-Element mit korrekter Einrückung
+                xmlContent = xmlContent.replace(
+                    /([^<]*<\/language>)/,
+                    `$1\n  ${rightsElement}`
+                );
+                console.log('RightsList-Element hinzugefügt');
+            }
+        }
+
+        // Affiliationen mit ROR-IDs anreichern, wenn Option aktiviert
+        if (options.enrichRor) {
+            console.log('Anreicherung mit ROR-IDs (Schwellenwert:', options.similarityThreshold, ')');
+            this.similarityThreshold = options.similarityThreshold;
+            xmlContent = await this.enrichAffiliations(xmlContent);
+        }
+
+        // Spezifische GFZ-Affiliation ersetzen (immer ausführen)
+        xmlContent = this.replaceSpecificAffiliations(xmlContent);
+
+        return xmlContent;
+    }
+
+    // Methode zur Ersetzung spezifischer Affiliationen
+    replaceSpecificAffiliations(xmlContent) {
+        const specificReplacements = [
+            {
+                pattern: /<affiliation>Deutsches GeoForschungsZentrum, Potsdam, Germany<\/affiliation>/g,
+                replacement: '<affiliation affiliationIdentifierScheme="ROR" schemeURI="https://ror.org/" affiliationIdentifier="https://ror.org/04z8jg394">Helmholtz Centre Potsdam - GFZ German Research Centre for Geosciences</affiliation>'
+            },
+            {
+                pattern: /<affiliation>Institut für Gewässerökologie und Binnenfischerei, , <\/affiliation>/g,
+                replacement: '<affiliation affiliationIdentifierScheme="ROR" schemeURI="https://ror.org/" affiliationIdentifier="https://ror.org/01nftxb06">Institut für Gewässerökologie und Binnenfischerei</affiliation>'
+            }
+        ];
+
+        let modifiedContent = xmlContent;
+        let replacementCount = 0;
+
+        for (const replacement of specificReplacements) {
+            const originalContent = modifiedContent;
+            modifiedContent = modifiedContent.replace(replacement.pattern, replacement.replacement);
+
+            // Zählen, wie viele Ersetzungen vorgenommen wurden
+            const matchCount = (originalContent.match(replacement.pattern) || []).length;
+            replacementCount += matchCount;
+
+            if (matchCount > 0) {
+                console.log(`${matchCount} spezifische Affiliation(s) ersetzt`);
+            }
+        }
+
+        if (replacementCount === 0) {
+            console.log('Keine spezifischen Affiliationen gefunden');
+        }
+
+        return modifiedContent;
+    }
+
+    // Methode zur Anreicherung von Affiliationen mit ROR-IDs
+    async enrichAffiliations(xmlContent) {
+        const affiliationRegex = /<affiliation(?!\s+affiliationIdentifier)([^>]*)>(.*?)<\/affiliation>/g;
+
+        // Alle Affiliationen ohne ROR-ID finden
+        const affiliationsToProcess = [];
+        let match;
+
+        // Alle zu verarbeitenden Affiliationen sammeln
+        while ((match = affiliationRegex.exec(xmlContent)) !== null) {
+            affiliationsToProcess.push({
+                fullMatch: match[0],
+                attributes: match[1],
+                name: match[2].trim()
+            });
+        }
+
+        console.log(`${affiliationsToProcess.length} Affiliationen ohne ROR-ID gefunden`);
+
+        // Für jede Affiliation die ROR-ID suchen und ersetzen
+        for (const affiliation of affiliationsToProcess) {
+            try {
+                const rorId = await this.findRorId(affiliation.name);
+
+                if (rorId) {
+                    console.log(`ROR-ID für "${affiliation.name}" gefunden: ${rorId}`);
+
+                    // Neues Affiliation-Element mit ROR-ID erstellen
+                    const newAffiliation = `<affiliation${affiliation.attributes} affiliationIdentifierScheme="ROR" schemeURI="https://ror.org/" affiliationIdentifier="https://ror.org/${rorId}">${affiliation.name}</affiliation>`;
+
+                    // Im XML-Inhalt ersetzen
+                    xmlContent = xmlContent.replace(affiliation.fullMatch, newAffiliation);
+                } else {
+                    console.log(`Keine ROR-ID für "${affiliation.name}" gefunden`);
+                }
+            } catch (error) {
+                console.error(`Fehler bei der ROR-Abfrage für "${affiliation.name}":`, error);
+            }
+        }
+
+        return xmlContent;
+    }
+
+    // Methode zum Abfragen der ROR-API und Finden der passendsten ROR-ID
+    async findRorId(affiliationName) {
+        try {
+            // URL-Kodierung des Namens für die API-Anfrage
+            const encodedName = encodeURIComponent(affiliationName);
+            const apiUrl = `https://api.ror.org/organizations?query=${encodedName}`;
+
+            console.log(`ROR-API Anfrage: ${apiUrl}`);
+
+            const response = await axios.get(apiUrl);
+            const data = response.data;
+
+            // Prüfe, ob die Antwort die erwartete Struktur hat
+            console.log(`${data.number_of_results} Ergebnisse gefunden`);
+
+            // Wenn keine Ergebnisse gefunden wurden
+            if (!data.items || data.items.length === 0) {
+                console.log("Keine Items in der Antwort gefunden");
+                return null;
+            }
+
+            // Das erste (beste) Ergebnis nehmen
+            const bestMatch = data.items[0];
+            console.log(`Bester Treffer: ${bestMatch.name} (ID: ${bestMatch.id})`);
+
+            // Prüfen, ob der Name der Organisation hinreichend ähnlich ist
+            // Hier eine einfache Übereinstimmungsbewertung
+            const normalizedName = affiliationName.toLowerCase();
+            const nameMatch = this.calculateSimilarity(normalizedName, bestMatch.name.toLowerCase());
+            console.log(`Namensähnlichkeit: ${nameMatch}`);
+
+            // Schwellenwert für die Namensähnlichkeit
+            if (nameMatch < this.similarityThreshold) {
+                console.log(`Ähnlichkeit zu niedrig (${nameMatch}) für "${affiliationName}" mit "${bestMatch.name}"`);
+
+                // Versuche, in den Aliases zu suchen
+                const aliasMatch = bestMatch.aliases.some(alias =>
+                    this.calculateSimilarity(normalizedName, alias.toLowerCase()) >= this.similarityThreshold
+                );
+
+                if (!aliasMatch) {
+                    return null;
+                }
+            }
+
+            // ROR-ID aus der vollständigen URL extrahieren
+            const rorId = bestMatch.id.replace('https://ror.org/', '');
+
+            console.log(`Beste Übereinstimmung für "${affiliationName}": "${bestMatch.name}" (ID: ${rorId})`);
+
+            return rorId;
+        } catch (error) {
+            console.error('Fehler bei der ROR-API Anfrage:', error);
+            return null;
+        }
+    }
+
+    // Hilfsmethode zur Berechnung der Ähnlichkeit zwischen zwei Strings
+    calculateSimilarity(s1, s2) {
+        // Einfache Ähnlichkeitsberechnung: Levenshtein-Distanz
+        // Hier vereinfacht mit einer Funktion zur Berechnung der Überlappung von Wörtern
+
+        const words1 = s1.split(/\s+/);
+        const words2 = s2.split(/\s+/);
+
+        let commonWords = 0;
+        for (const word of words1) {
+            if (word.length > 2 && words2.some(w => w.includes(word) || word.includes(w))) {
+                commonWords++;
+            }
+        }
+
+        // Normalisieren auf einen Wert zwischen 0 und 1
+        return commonWords / Math.max(words1.length, words2.length);
+    }
+
     // Haupttransformationsmethode
-    async transformFiles(files) {
+    async transformFiles(files, options = {}) {
         try {
             const xsltPath = await this.findXsltFile();
             console.log('Verwende XSLT-Datei:', xsltPath);
 
             const sefPath = await this.compileToSEF(xsltPath);
+
+            // Standardoptionen setzen
+            const transformOptions = {
+                addRights: options.addRights !== false, // Standard: true
+                enrichRor: options.enrichRor !== false, // Standard: true
+                similarityThreshold: options.similarityThreshold || 0.6 // Standard: 0.6
+            };
+
+            console.log('Verwendete Transformationsoptionen:', transformOptions);
+
+            // Schwellenwert für Ähnlichkeit setzen
+            this.similarityThreshold = transformOptions.similarityThreshold;
 
             const transformationResults = await Promise.all(
                 files.map(async (file) => {
@@ -152,7 +359,7 @@ class XmlTransformer {
                         const outputFileName = `transformed-${file.originalname}`;
                         const outputFile = path.join(this.directories.transform, outputFileName);
 
-                        await this.transformXML(file.path, outputFile, sefPath);
+                        await this.transformXML(file.path, outputFile, sefPath, transformOptions);
 
                         return {
                             originalName: file.originalname,
